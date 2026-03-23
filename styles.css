@@ -240,64 +240,48 @@ body.thematic .settings-panel button {
 }
 
 
-/* --- Estilos para Celular --- */
-@media (max-width: 768px) {
+/* --- ESTO DEBE IR AL FINAL DE TODO EL CSS --- */
+@media screen and (max-width: 480px) {
     
-    /* Ajustamos el menú a 2 columnas en lugar de 3 */
+    /* 1. Forzamos al contenedor a que no use las 3 columnas fijas */
     .menu {
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 15px; /* Menos espacio entre botones */
-        padding: 10px;
-        margin-top: 10px;
+        display: flex !important;
+        flex-wrap: wrap; /* Permite que los botones bajen si no caben */
+        justify-content: center;
+        width: 100% !important;
+        grid-template-columns: none !important; 
+        gap: 10px !important;
+        margin-top: 50px !important; /* Espacio para que no choque con el texto */
     }
 
-    /* Ajustamos el tamaño de los botones para que no se desborden */
+    /* 2. Ajustamos el tamaño de los cuadros amarillos */
     .menu-item {
-        width: 140px;  /* Un poco más pequeños para que quepan dos */
-        height: 140px;
-        font-size: 0.8rem; /* Texto un poco más pequeño */
-        padding: 10px;
+        width: 140px !important;  /* Tamaño más pequeño para que entren 2 por fila */
+        height: 140px !important;
+        min-width: 140px !important;
+        font-size: 14px !important;
+        margin: 5px;
     }
 
-    /* Ajuste de los botones de las esquinas (Avatar y Ajustes) */
+    /* 3. Ajustamos el Header para que no sea tan alto */
+    header {
+        height: 50px !important;
+    }
+
+    /* 4. El avatar (muñequito azul) y ajustes más pequeños */
     .menu-btn img {
-        width: 50px;
-        height: 50px;
+        width: 45px !important;
+        height: 45px !important;
     }
 
     .settings-btn {
-        top: 15px;
-        right: 15px;
-        font-size: 20px;
+        top: 10px !important;
+        right: 10px !important;
     }
 
-    /* Ajuste del sidebar y panel de ajustes para que no ocupen toda la pantalla */
-    .sidebar, .settings-panel {
-        width: 200px;
-    }
-
-    /* Aseguramos que el fondo temático se vea bien */
+    /* 5. El fondo para que no se estire raro */
     body.thematic {
-        background-attachment: fixed; /* Evita que el fondo se mueva al hacer scroll */
-    }
-
-    /* Ajuste del footer para que no estorbe */
-    footer {
-        font-size: 10px;
-        padding: 10px 0;
+        background-size: cover !important;
+        background-attachment: scroll !important;
     }
 }
-
-/* --- Ajuste extra para pantallas muy pequeñas (iPhone SE, etc.) --- */
-@media (max-width: 360px) {
-    .menu-item {
-        width: 120px;
-        height: 120px;
-    }
-
-
-
-
-
-
-
