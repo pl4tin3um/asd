@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Proyecto Final</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<header class="header">
+    <h1><span class="title">Kana Study</span></h1>
+    </header>
+<body class="dark">
+
+<div class="menu-btn" onclick="toggleSidebar()">
+    <img src="src/miku.png">
+</div>
+
+
+    <div class="sidebar" id="sidebar">
+        <div class="social-buttons">
+        <a href="https://www.tiktok.com/@pl4tin3um" target="_blank">
+        <img src="https://logo.svgcdn.com/logos/tiktok.png" alt="mi tiktok" class="social-icon">
+        </a>
+    </div>
+
+    </div>
+
+
+    <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
+
+
+    <div class="settings-panel" id="settingsPanel">
+        <h3>Themes</h3>
+        <button onclick="setTheme('light')">Light</button>
+        <button onclick="setTheme('dark')">Dark</button>
+        <button onclick="setTheme('thematic')">Thematic</button>
+
+
+
+    <h3>Language</h3>
+
+    <select id="languageSelect" onchange="setLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="ja">にほん</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+
+    </select>
+    </div>
+        </div>
+
+    <main>
+        <h1 class="logo">buen dia pa</h1>
+
+        <div class="menu">
+            <div class="menu-item">かな Study</div>
+            <div class="menu-item">Kanji Study</div>
+            <div class="menu-item">にほん Explore</div>
+            <div class="menu-item">Study Materials</div>
+            <div class="menu-item">Lets play!</div>
+            <div class="menu-item">Extra</div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+ <footer class ="decoracion">
+        <h3>"You don't have to be great to start, but you have to start to be great." – Zig Ziglar.</h3>
+        <p>COPYRIGHT &copy; 2026 Kevin Fontes. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
