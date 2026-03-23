@@ -240,6 +240,62 @@ body.thematic .settings-panel button {
 }
 
 
+/* --- Estilos para Celular --- */
+@media (max-width: 768px) {
+    
+    /* Ajustamos el menú a 2 columnas en lugar de 3 */
+    .menu {
+        grid-template-columns: repeat(2, 1fr); 
+        gap: 15px; /* Menos espacio entre botones */
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    /* Ajustamos el tamaño de los botones para que no se desborden */
+    .menu-item {
+        width: 140px;  /* Un poco más pequeños para que quepan dos */
+        height: 140px;
+        font-size: 0.8rem; /* Texto un poco más pequeño */
+        padding: 10px;
+    }
+
+    /* Ajuste de los botones de las esquinas (Avatar y Ajustes) */
+    .menu-btn img {
+        width: 50px;
+        height: 50px;
+    }
+
+    .settings-btn {
+        top: 15px;
+        right: 15px;
+        font-size: 20px;
+    }
+
+    /* Ajuste del sidebar y panel de ajustes para que no ocupen toda la pantalla */
+    .sidebar, .settings-panel {
+        width: 200px;
+    }
+
+    /* Aseguramos que el fondo temático se vea bien */
+    body.thematic {
+        background-attachment: fixed; /* Evita que el fondo se mueva al hacer scroll */
+    }
+
+    /* Ajuste del footer para que no estorbe */
+    footer {
+        font-size: 10px;
+        padding: 10px 0;
+    }
+}
+
+/* --- Ajuste extra para pantallas muy pequeñas (iPhone SE, etc.) --- */
+@media (max-width: 360px) {
+    .menu-item {
+        width: 120px;
+        height: 120px;
+    }
+
+
 
 
 
