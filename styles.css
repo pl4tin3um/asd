@@ -240,104 +240,16 @@ body.thematic .settings-panel button {
 }
 
 
-/* Mobile */
+
 @media (max-width: 320px) {
-.logo {
-	width: 100%;
-	text-align: center;
-	margin-top: 13px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-}
-.text_column {
-	width: 100%;
-	text-align: justify;
-	padding: 0;
-}
-.intro .column p {
-	width: 80%;
-	margin-left: 0px;
-}
-.text_column {
-	padding-left: 20px;
-}
-.thumbnail {
-	width: 100%;
-}
-.column {
-	width: 100%;
-	margin-top: 0px;
-}
-.hero_header {
-	padding-left: 10px;
-	padding-right: 10px;
-	line-height: 22px;
-	text-align: center;
-}
 }
 
-/* Small Tablets  pantallas de escritorio pequeñas Laptops de 11" a 13" Resoluciones entre 768px y 1024px de ancho, aproximadamente*/
+
 @media (min-width: 321px)and (max-width: 767px) {
-.logo {
-	width: 100%;
-	text-align: center;
-	margin-top: 13px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	margin-left: 0px;
-}
-.text_column {
-	width: 100%;
-	text-align: left;
-	padding: 0;
-}
-.thumbnail {
-	width: 100%;
-}
-.column {
-	width: 100%;
-	margin-top: 0px;
-}
-.thumbnail {
-	width: 100%;
-}
-.text_column {
-	padding-left: 20px;
-	padding-right: 20px;
-	width: 90%;
-}
-.column {
-	width: 100%;
-	margin-left: 0px;
-	margin-right: 0px;
-}
-.profile {
-	width: 100%;
-}
-.intro .column p {
-	width: 90%;
-	text-align: center;
-	padding-left: 0px;
-}
 }
 
-/* PANTALLAS DE ESCRITORIO CHICAS */
 @media (min-width: 768px) and (max-width: 1096px) {
-.text_column {
-	width: 100%;
-}
-.thumbnail {
-	width: 48%;
-}
-.text_column {
-	width: 90%;
-	margin: 0;
-	padding: 20px;
-}
-.intro .column p {
-	width: 80%;
-}
+
 }
 
 
