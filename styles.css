@@ -180,6 +180,7 @@ footer {
 
 header.light {
     color: #000000;
+    background-color: #626161;
     border: 3px solid #7c7c7c;
 }
 header.thematic {
@@ -223,7 +224,7 @@ body.thematic .settings-panel{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-        border: #111 solid 5px;
+    border: #111 solid 5px;
 }
 body.thematic .sidebar {
     background-image: url('src/thematicLeftSidebar.png');
