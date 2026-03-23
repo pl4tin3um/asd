@@ -266,6 +266,7 @@ body.thematic .settings-panel button {
     /* 3. Ajustamos el Header para que no sea tan alto */
     header {
         height: 50px !important;
+        justify-content: center !important;
     }
 
     /* 4. El avatar (muñequito azul) y ajustes más pequeños */
