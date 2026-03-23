@@ -240,43 +240,6 @@ body.thematic .settings-panel button {
 }
 
 
-@media (max-width: 400px) {
-  
-  .menu {
-    display: grid;
-    /* Forzamos 2 columnas iguales */
-    grid-template-columns: 1fr 1fr; 
-    gap: 12px;
-    padding: 15px;
-    width: 90%;
-    margin: 0 auto;
-  }
-
-  .menu-item {
-    /* Quitamos el height fijo si lo tenías y usamos aspect-ratio */
-    width: 100%;
-    aspect-ratio: 1 / 1; 
-    
-    /* Centrado de texto */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    
-    /* Ajuste de fuente */
-    font-size: 14px;
-    border-radius: 12px; /* Bordes un poco más suaves */
-    padding: 8px;
-  }
-
-  /* Ajuste para el header (la barra de arriba) */
-  header {
-    height: 60px; /* Para que no sea tan alto */
-    font-size: 1.2rem;
-  }
-}
-
-
 
 
 
