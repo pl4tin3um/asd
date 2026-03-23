@@ -5,6 +5,9 @@ header {
     z-index: 2; 
     display: flex;
     justify-content: center;
+        color: white;
+    background-color: #565656;
+    border: 3px solid #6f6f6f;
 }
 
 
@@ -233,11 +236,7 @@ header.thematic {
     color: #222;
     border: 3px solid #393939;
 }
-header.dark {
-    color: white;
-    background-color: #565656;
-    border: 3px solid #6f6f6f;
-}    
+
 
 
 
