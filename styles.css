@@ -202,7 +202,7 @@ body.light .settings-panel {
     background: #eee;
     color: #222;
 }
-.settings-panel.light button {
+body.light .settings-panel button {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
