@@ -250,36 +250,37 @@ body.thematic .settings-panel button {
 }
 
 
-/* --- ESTO DEBE IR AL FINAL DE TODO EL CSS --- */
+
 @media screen and (max-width: 480px) {
     
-    /* 1. Forzamos al contenedor a que no use las 3 columnas fijas */
+   
     .menu {
         display: flex !important;
-        flex-wrap: wrap; /* Permite que los botones bajen si no caben */
+        flex-wrap: wrap;
         justify-content: center;
         width: 100% !important;
         grid-template-columns: none !important; 
         gap: 10px !important;
-        margin-top: 50px !important; /* Espacio para que no choque con el texto */
+        margin-top: 50px !important; 
     }
 
-    /* 2. Ajustamos el tamaño de los cuadros amarillos */
+
     .menu-item {
-        width: 140px !important;  /* Tamaño más pequeño para que entren 2 por fila */
+        width: 140px !important;  
         height: 140px !important;
         min-width: 140px !important;
         font-size: 14px !important;
         margin: 5px;
     }
 
-    /* 3. Ajustamos el Header para que no sea tan alto */
+   
     header {
         height: 50px !important;
+        font-size: 10px;
         justify-content: center !important;
     }
 
-    /* 4. El avatar (muñequito azul) y ajustes más pequeños */
+
     .menu-btn img {
         width: 45px !important;
         height: 45px !important;
