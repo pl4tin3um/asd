@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrenador Kana Pro</title>
+    <link rel="stylesheet" href="kanastudyCS.css">
+</head>
+<body>
+
+<div class="card">
+    <!-- SECCIÓN MENÚ -->
+    <div id="menu">
+        <h2>🎯 Configuración</h2>
+        
+        <div class="selector-tipo">
+            <button id="btn-h" class="active" onclick="setTipo('h')">Hiragana</button>
+            <button id="btn-k" onclick="setTipo('k')">Katakana</button>
+        </div>
+
+<div class="grid-checks">
+    <label class="check-item"><input type="checkbox" value="Vocal" checked><span>Vocales</span></label>
+    <label class="check-item"><input type="checkbox" value="K" checked><span>か-カ (ka...)</span></label>
+    <label class="check-item"><input type="checkbox" value="S" checked><span>さ-サ (sa...)</span></label>
+    <label class="check-item"><input type="checkbox" value="T" checked><span>た-タ (ta...)</span></label>
+    <label class="check-item"><input type="checkbox" value="N" checked><span>な-ナ (na...)</span></label>
+    <label class="check-item"><input type="checkbox" value="H" checked><span>は-ハ (ha...)</span></label>
+    <label class="check-item"><input type="checkbox" value="M" checked><span>ま-マ (ma...)</span></label>
+    <label class="check-item"><input type="checkbox" value="Y" checked><span>や-ヤ (ya...)</span></label>
+    <label class="check-item"><input type="checkbox" value="R" checked><span>ら-ラ (ra...)</span></label>
+    <label class="check-item"><input type="checkbox" value="W/N" checked><span>わ-ワ (wa...)</span></label>
+</div>
+
+        <button class="btn-principal" onclick="iniciarSesion()">Empezar</button>
+    </div>
+
+    <!-- SECCIÓN JUEGO -->
+    <div id="juego" class="hidden">
+        <div class="header-juego">
+            <span id="score">Racha: 0</span>
+            <button class="btn-sm" onclick="volver()">Menú</button>
+        </div>
+        
+        <div id="caracter-visual"></div>
+        
+        <input type="text" id="respuesta" placeholder="romaji..." autocomplete="off">
+        
+        <div id="feedback"></div>
+    </div>
+</div>
+
+<script src="kanastudyJS.js"></script>
+</body>
+</html>
