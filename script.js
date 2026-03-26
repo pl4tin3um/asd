@@ -14,9 +14,23 @@ function toggleSettings() {
 function setTheme(theme) {
     document.body.className = theme;
     const header = document.querySelector("header");
-    header.className = `header ${theme}`;
+    if (header) {
+        header.className = `header ${theme}`;
+    }
     
+
+    localStorage.setItem('selectedTheme', theme);
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem('selectedTheme');
+
+    // Si existe un tema guardado, lo aplicamos
+    if (savedTheme) {
+        setTheme(savedTheme);
+    }
+});
+
 //======================================
 
 
