@@ -194,7 +194,14 @@ function actualizarScore() {
 
 
 
+document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem('selectedTheme');
 
+    // Si existe un tema guardado, lo aplicamos
+    if (savedTheme) {
+        setTheme(savedTheme);
+    }
+});
 
 
 

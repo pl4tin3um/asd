@@ -80,6 +80,12 @@ body {
     border-color: #7085ff;
     box-shadow: 0 0 10px rgba(61, 90, 254, 0.3);
 }
+#score{
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #10b981;
+    margin-top: 10px;
+}
 
 .check-item span:hover {
     background: #475569;
@@ -99,13 +105,13 @@ body {
 }
 
 .btn-principal {
-    width: 100%;
-    padding: 15px;
+    width: 50%;
+    padding: 5px;
     background: #10b981;
     color: white;
     border: none;
     border-radius: 10px;
-    font-size: 1.1rem;
+    font-size: 1.0rem;
     font-weight: bold;
     cursor: pointer;
 }
@@ -245,3 +251,45 @@ input {
     transform: rotate(45deg) scale(1.1);
     color: #38bdf8;
 }
+
+body.thematic {
+    background-image: url('src/thematicBodyBackground.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+body.thematic .card {
+    background: rgba(255, 255, 255, 0.3) !important;
+    border: 3px solid #393939 !important;
+}
+body.thematic #caracter-visual {
+    color: #222 !important;
+}
+
+body.thematic .grid-checks {
+    
+    background: rgba(255, 255, 255, 0.4) !important;
+    border: 3px solid #393939 !important;
+}
+body.thematic #score {
+    background: rgba(255, 255, 255, 0.3);
+    color: #222;
+    border: 1px solid #393939;
+}
+
+body.thematic .settings-panel{
+    background-image: url('src/thematicRightSidebar.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border: #111 solid 5px;
+}
+body.thematic .settings-panel button {
+    background: rgba(255, 255, 255, 0.3);
+    color: #222;
+    border: 1px solid #393939;
+}
+
+
+
