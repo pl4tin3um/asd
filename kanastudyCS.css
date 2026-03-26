@@ -153,10 +153,26 @@ input {
 }
 
 
+.menu-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    z-index: 1000;
+}
 
+.menu-btn img {
+    width: 70px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 50%;
+    transition: 0.3s; 
+}
 
-
-
+.menu-btn img:hover {
+    transform: scale(1.1);
+    filter: brightness(1.2);
+}
 
 
 

@@ -159,7 +159,7 @@ function verificar() {
         setTimeout(() => {
             indiceBucle++;
             nuevaPregunta();
-        }, 1500);
+        }, 700);
     }
 }
 
@@ -232,3 +232,8 @@ items.forEach(item => {
     });
 });
 //======================================
+
+
+
+
+
