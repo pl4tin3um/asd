@@ -8,36 +8,91 @@
 </head>
 <body>
 
+        <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
+
+
+    <div class="settings-panel" id="settingsPanel">
+        <h3>Themes</h3>
+        <button onclick="setTheme('light')">Default</button>
+        <button onclick="setTheme('thematic')">Thematic</button>
+
+
+
+    <h3>Language</h3>
+
+    <select id="languageSelect" onchange="setLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="ja">にほん</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+
+    </select>
+    </div>
+
 <div class="card">
-    <!-- SECCIÓN MENÚ -->
+
     <div id="menu">
         <h2>🎯 Configuración</h2>
         
-        <div class="selector-tipo">
-            <button id="btn-h" class="active" onclick="setTipo('h')">Hiragana</button>
-            <button id="btn-k" onclick="setTipo('k')">Katakana</button>
-        </div>
+<div class="selector-tipo">
+    <button id="btn-h" class="active" onclick="setTipo('h')">Hiragana</button>
+    <button id="btn-k" onclick="setTipo('k')">Katakana</button>
+</div>
+<div class="selector-tipo">
+    <button id="btn-ch" onclick="setTipo('ch')">Compuestos (H)</button>
+    <button id="btn-ck" onclick="setTipo('ck')">Compuestos (K)</button>
+    <button id="btn-ex" onclick="setTipo('ex')">Extras (K)</button>
+</div>
+
+<div class="controles-seleccion">
+    <button type="button" class="btn-sm" onclick="seleccionarTodo(true)">Todos</button>
+    <button type="button" class="btn-sm" onclick="seleccionarTodo(false)">Ninguno</button>
+</div>
 
 <div class="grid-checks">
-    <label class="check-item"><input type="checkbox" value="Vocal" checked><span>Vocales</span></label>
-    <label class="check-item"><input type="checkbox" value="K" checked><span>か-カ (ka...)</span></label>
-    <label class="check-item"><input type="checkbox" value="S" checked><span>さ-サ (sa...)</span></label>
-    <label class="check-item"><input type="checkbox" value="T" checked><span>た-タ (ta...)</span></label>
-    <label class="check-item"><input type="checkbox" value="N" checked><span>な-ナ (na...)</span></label>
-    <label class="check-item"><input type="checkbox" value="H" checked><span>は-ハ (ha...)</span></label>
-    <label class="check-item"><input type="checkbox" value="M" checked><span>ま-マ (ma...)</span></label>
-    <label class="check-item"><input type="checkbox" value="Y" checked><span>や-ヤ (ya...)</span></label>
-    <label class="check-item"><input type="checkbox" value="R" checked><span>ら-ラ (ra...)</span></label>
-    <label class="check-item"><input type="checkbox" value="W/N" checked><span>わ-ワ (wa...)</span></label>
+
+    <label class="check-item grupo-basico"><input type="checkbox" value="Vocal" checked><span>Vocales</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="K" checked><span>K (ka...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="S" checked><span>S (sa...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="T" checked><span>T (ta...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="N" checked><span>N (na...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="H" checked><span>H (ha...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="M" checked><span>M (ma...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="Y" checked><span>Y (ya...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="R" checked><span>R (ra...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="W/N" checked><span>W/N</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="G"><span>G (ga...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="Z"><span>Z (za...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="D"><span>D (da...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="B"><span>B (ba...)</span></label>
+    <label class="check-item grupo-basico"><input type="checkbox" value="P"><span>P (pa...)</span></label>
+
+
+    <label class="check-item grupo-compuesto hidden"><input type="checkbox" value="C1"><span>C1 (kya-sha)</span></label>
+    <label class="check-item grupo-compuesto hidden"><input type="checkbox" value="C2"><span>C2 (cha-nya)</span></label>
+    <label class="check-item grupo-compuesto hidden"><input type="checkbox" value="C3"><span>C3 (hya-mya)</span></label>
+    <label class="check-item grupo-compuesto hidden"><input type="checkbox" value="C4"><span>C4 (rya-gya)</span></label>
+    <label class="check-item grupo-compuesto hidden"><input type="checkbox" value="C5"><span>C5 (ryo-gya-ja)</span></label>
+    <label class="check-item grupo-compuesto hidden"><input type="checkbox" value="C6"><span>C6 (bya-pya)</span></label>
+
+
+
+
+
+    <label class="check-item grupo-extra hidden"><input type="checkbox" value="E1"><span>E1 (F/V)</span></label>
+    <label class="check-item grupo-extra hidden"><input type="checkbox" value="E2"><span>E2 (Ti/Di)</span></label>
+    <label class="check-item grupo-extra hidden"><input type="checkbox" value="E3"><span>E3 (She/Je/Che)</span></label>
 </div>
 
         <button class="btn-principal" onclick="iniciarSesion()">Empezar</button>
     </div>
 
-    <!-- SECCIÓN JUEGO -->
+
     <div id="juego" class="hidden">
         <div class="header-juego">
-            <span id="score">Racha: 0</span>
+            <span id="score">Racha: 0 </span>
             <button class="btn-sm" onclick="volver()">Menú</button>
         </div>
         
