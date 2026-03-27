@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Kana Study</title>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background: #f5f5f5;
+    }
+
+    .menu {
+        margin: 20px;
+    }
+
+    button {
+        padding: 10px 15px;
+        margin: 5px;
+        border: none;
+        background: #4CAF50;
+        color: white;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    button:hover {
+        background: #45a049;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+        gap: 10px;
+        max-width: 800px;
+        margin: auto;
+    }
+
+    .card {
+        background: white;
+        padding: 10px;
+        border-radius: 8px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+
+    .char {
+        font-size: 24px;
+    }
+
+    .romaji {
+        font-size: 12px;
+        color: gray;
+    }
+
+    .hidden {
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Kana Study</h1>
+
+<div class="menu">
+    <button onclick="showSection('hiragana')">Hiragana</button>
+    <button onclick="showSection('katakana')">Katakana</button>
+    <button onclick="showSection('kanji')">Kanji</button>
+</div>
+
+
+<div id="hiragana">
+    <h2>Hiragana Básico</h2>
+    <div class="grid" id="hiragana-basic"></div>
+
+    <h2>Hiragana Compuesto</h2>
+    <div class="grid" id="hiragana-combo"></div>
+</div>
+
+
+<div id="katakana" class="hidden">
+    <h2>Katakana Básico</h2>
+    <div class="grid" id="katakana-basic"></div>
+
+    <h2>Katakana Extendido</h2>
+    <div class="grid" id="katakana-extra"></div>
+</div>
+
+
+<div id="kanji" class="hidden">
+    <h2>Kanji (próximamente)</h2>
+</div>
+
+<script>
+function showSection(section) {
+    document.querySelectorAll("body > div").forEach(div => {
+        if(div.id) div.classList.add("hidden");
+    });
+    document.getElementById(section).classList.remove("hidden");
+}
+
+
+const hiraganaBasic = [
+    ["あ","a"], ["い","i"], ["う","u"], ["え","e"], ["お","o"],
+    ["か","ka"], ["き","ki"], ["く","ku"], ["け","ke"], ["こ","ko"]
+];
+
+const hiraganaCombo = [
+    ["きゃ","kya"], ["きゅ","kyu"], ["きょ","kyo"]
+];
+
+const katakanaBasic = [
+    ["ア","a"], ["イ","i"], ["ウ","u"], ["エ","e"], ["オ","o"],
+    ["カ","ka"], ["キ","ki"], ["ク","ku"], ["ケ","ke"], ["コ","ko"]
+];
+
+const katakanaExtra = [
+    ["ファ","fa"], ["ティ","ti"], ["ディ","di"]
+];
+
+
+function render(id, data) {
+    const container = document.getElementById(id);
+    data.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "card";
+        div.innerHTML = `
+            <div class="char">${item[0]}</div>
+            <div class="romaji">${item[1]}</div>
+        `;
+        container.appendChild(div);
+    });
+}
+
+
+render("hiragana-basic", hiraganaBasic);
+render("hiragana-combo", hiraganaCombo);
+render("katakana-basic", katakanaBasic);
+render("katakana-extra", katakanaExtra);
+</script>
+
+</body>
+</html>

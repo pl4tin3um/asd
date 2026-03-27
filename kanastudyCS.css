@@ -45,7 +45,7 @@ body {
 
 .grid-checks {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     margin-bottom: 20px;
     background: #0f172a;
@@ -216,7 +216,6 @@ input {
     width: 100%;
     padding: 12px;
     margin-top: 10px;
-
     background: #334155; 
     border: none;
     border-radius: 8px;
@@ -252,6 +251,26 @@ input {
     color: #38bdf8;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 body.thematic {
     background-image: url('src/thematicBodyBackground.png');
     background-size: cover;
@@ -286,9 +305,12 @@ body.thematic .settings-panel{
     border: #111 solid 5px;
 }
 body.thematic .settings-panel button {
-    background: rgba(255, 255, 255, 0.3);
-    color: #222;
-    border: 1px solid #393939;
+    background: rgba(0, 0, 0, 1);
+    color: #ffffff;
+    border: 3px solid #ffffff;
+}
+body.thematic .settings-panel h3 {
+    color: #000000;
 }
 
 

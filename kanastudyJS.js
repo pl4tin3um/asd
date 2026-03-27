@@ -194,6 +194,7 @@ function actualizarScore() {
 
 
 
+
 document.addEventListener("DOMContentLoaded", () => {
     const savedTheme = localStorage.getItem('selectedTheme');
 
