@@ -63,11 +63,17 @@ main {
     top: 20px;
     right: 20px;
     font-size: 24px;
+    color: #94a3b8; 
     cursor: pointer;
-    z-index: 1000; 
+    z-index: 1000;
+    transition: all 0.3s;
+    background-color: #000000;
+    border-radius: 10px;
+    border: 6px solid #94a3b8;
 }
+
 .settings-btn:hover {
-    transform: scale(1.1);
+    transform: rotate(45deg) scale(1.1);
 }
 
 
