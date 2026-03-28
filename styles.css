@@ -49,13 +49,26 @@ main {
     cursor: pointer;
     transition: 0.3s;
     box-shadow: 0 0px 20px rgba(0,0,0,0.3);
-
+    border: #94a3b8 solid 5px  ;
 }
 
 .menu-item:hover {
     background: #333;
     transform: scale(1.05);
 }
+.menu-itemUSELESS {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    background-color: rgb(3, 28, 83);
+    justify-content: center;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 0px 20px rgba(0,0,0,0.3);
+    border: 5px solid #0e022c;
+    }
 
 
 .settings-btn {
@@ -186,8 +199,8 @@ footer {
 
 header.light {
     color: #000000;
-    background-color: #626161;
-    border: 3px solid #7c7c7c;
+    background-color: #b9b9b9;
+    border: 3px solid #000000;
 }
 header.thematic {
     background: rgba(255, 255, 255, 0.3);
@@ -202,6 +215,9 @@ body.light {
 
 body.light .menu-item {
     background: #ddd;
+}
+body.light .menu-itemUSELESS { 
+    color: #ddd;
 }
 
 body.light .settings-panel {
@@ -235,6 +251,10 @@ body.thematic .menu-item {
     background: #f8df96;
     color: rgb(0, 0, 0);
 }
+body.thematic  .menu-itemUSELESS { 
+    color: #ddd;
+}
+
 body.thematic .settings-panel{
     background-image: url('src/thematicRightSidebar.png');
     background-size: cover;
