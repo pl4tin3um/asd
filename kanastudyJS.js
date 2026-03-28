@@ -65,32 +65,17 @@ let racha = 0;
 let modoBase = 'h'; 
 
 function setTipo(modo) {
-
+    // Quitar active de botones
     document.querySelectorAll('.selector-tipo button').forEach(b => b.classList.remove('active'));
     document.getElementById(`btn-${modo}`).classList.add('active');
 
+    // Ocultar todas las secciones primero
+    document.querySelectorAll('.script-section').forEach(s => s.classList.add('hidden'));
 
-    const basico = document.querySelectorAll('.grupo-basico');
-    const compuesto = document.querySelectorAll('.grupo-compuesto');
-    const extra = document.querySelectorAll('.grupo-extra');
-
-
-    [...basico, ...compuesto, ...extra].forEach(el => el.classList.add('hidden'));
-
-    if (modo === 'h' || modo === 'k') {
-        basico.forEach(el => el.classList.remove('hidden'));
-        tipoActual = modo;
-        modoBase = modo;
-    } else if (modo === 'ch' || modo === 'ck') {
-        compuesto.forEach(el => el.classList.remove('hidden'));
-        tipoActual = (modo === 'ch') ? 'h' : 'k';
-    } else if (modo === 'ex') {
-        extra.forEach(el => el.classList.remove('hidden'));
-        tipoActual = 'k';
-    }
-    
-
-    seleccionarTodo(false);
+    // Mostrar según el botón presionado
+    if (modo === 'h') document.getElementById('section-h').classList.remove('hidden');
+    if (modo === 'k') document.getElementById('section-k').classList.remove('hidden');
+    // ... etc
 }
 
 function seleccionarTodo(estado) {
@@ -98,22 +83,41 @@ function seleccionarTodo(estado) {
     const checkboxes = document.querySelectorAll('.grid-checks label:not(.disabled) input');
     checkboxes.forEach(cb => cb.checked = estado);
 }
+// Función para navegar suavemente entre secciones dentro del scroll
+function irA(id) {
+    const elemento = document.getElementById(id);
+    elemento.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // Opcional: Marcar botón como activo
+    document.querySelectorAll('.selector-tipo button').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText.toLowerCase().includes(id.split('-')[1]));
+    });
+}
 
 function iniciarSesion() {
-    const seleccionados = Array.from(document.querySelectorAll('.grid-checks input:checked')).map(i => i.value);
-    if (seleccionados.length === 0) return alert("Selecciona al menos un grupo");
+    // 1. Capturar TODOS los marcados
+    const seleccionados = document.querySelectorAll('.grid-checks input:checked');
+    
+    if (seleccionados.length === 0) return alert("Selecciona al menos un grupo para estudiar");
 
-    poolActual = {};
-    seleccionados.forEach(g => {
-        if (DATA[tipoActual][g]) {
-            poolActual = { ...poolActual, ...DATA[tipoActual][g] };
+    poolActual = {}; // Limpiamos el pool anterior
+
+    // 2. Construir el pool mixto
+    seleccionados.forEach(cb => {
+        const script = cb.dataset.script; // 'h' o 'k'
+        const grupo = cb.value;          // 'Vocal', 'C1', 'E1', etc.
+
+        if (DATA[script] && DATA[script][grupo]) {
+            // Combinamos los objetos de DATA en el poolActual
+            poolActual = { ...poolActual, ...DATA[script][grupo] };
         }
     });
 
-    keysActuales = mezclarArray(Object.keys(poolActual)); 
-    indiceBucle = 0; 
-    
+    // 3. Preparar el juego
+    keysActuales = mezclarArray(Object.keys(poolActual));
+    indiceBucle = 0;
     racha = 0;
+
     document.getElementById('menu').classList.add('hidden');
     document.getElementById('juego').classList.remove('hidden');
     actualizarScore();
