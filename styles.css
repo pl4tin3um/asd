@@ -298,6 +298,13 @@ body.thematic .settings-panel button {
         font-size: 14px !important;
         margin: 5px;
     }
+    .menu-itemUSELESS {
+        width: 140px !important;  
+        height: 140px !important;
+        min-width: 140px !important;
+        font-size: 14px !important;
+        margin: 5px;
+    }
 
    
     header {
