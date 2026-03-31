@@ -45,6 +45,8 @@ items.forEach(item => {
             window.location.href = 'kanastudy.html';
         } else if (texto.includes('who i am')) {
             window.location.href = 'WhoIam.html';
+        }   else if (texto.includes('kanji')) {
+            window.location.href = 'kanjiStudy.html';
         }
     });
 });
