@@ -4,10 +4,10 @@ const kanjiDatabase = {
             title: "Números (1-5)",
             items: [
                 { kanji: "一", kana: "いち", romaji: "ichi" },
-                { kanji: "二", kana: "ni", romaji: "ni" },
+                { kanji: "二", kana: "に", romaji: "ni" },
                 { kanji: "三", kana: "さん", romaji: "san" },
                 { kanji: "四", kana: "よん", romaji: "yon" },
-                { kanji: "五", kana: "go", romaji: "go" }
+                { kanji: "五", kana: "ご", romaji: "go" }
             ]
         },
         {
