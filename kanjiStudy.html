@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -125,6 +124,8 @@
             font-weight: bold;
         }
         
+        .group-card.selected .mini-char span { color: white; }
+
         .footer-controls {
             position: fixed;
             bottom: 30px;
@@ -145,6 +146,7 @@
             box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
             transition: 0.3s;
         }
+        .btn-study:hover { transform: scale(1.05); }
 
         .screen { display: none; }
         .active-screen { display: block; }
@@ -170,34 +172,6 @@
             text-align: center;
         }
         .menu-btn img {
-<<<<<<< HEAD
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            border: 3px solid #334155;
-        }
-    </style>
-</head>
-<body>
-    <a href="index.html" class="menu-btn">
-        <img src="src/miku.png" alt="Inicio">
-    </a>
-    <div class="container">
-        <div class="nav-container">
-            <div class="category-tabs-container">
-                <button class="tab-btn active" data-cat="Nivel N5: Esenciales" onclick="setTab('Nivel N5: Esenciales')">Nivel N5: Esenciales</button>
-                <button class="tab-btn" data-cat="Naturaleza" onclick="setTab('Naturaleza')">Naturaleza</button>
-            </div>
-            <button id="glossary-btn" class="tab-btn" onclick="toggleGlossary()" style="border-color: var(--accent); color: var(--accent);">
-                📖 Glosario
-            </button>
-        </div>
-
-        <div id="glossary-screen" class="screen">
-            <h2 style="text-align:center">Diccionario de Kanjis</h2>
-            <div id="glossary-container" class="grid-groups"></div>
-        </div>
-=======
     width: 65px;
     height: 65px;
     border-radius: 50%;
@@ -231,7 +205,6 @@
             <a href="index.html" class="menu-btn">
     <img src="src/miku.png" alt="Inicio">
     </a>
->>>>>>> 9d3a7d762fb8090943dfdd21b2983301997c035d
 
         <div id="setup-screen" class="screen active-screen">
             <header style="text-align:center; margin-bottom: 30px;">
@@ -239,8 +212,10 @@
                 <p style="color:var(--text-dim)">Selecciona los grupos que quieres estudiar hoy</p>
             </header>
 
+            <div class="nav-container" id="category-tabs"></div>
+
             <div class="action-bar">
-                <button class="btn-small" onclick="selectAll(true)">Seleccionar Todo</button>
+                <button class="btn-small" onclick="selectAll(true)">Seleccionar Todo en esta pestaña</button>
                 <button class="btn-small" onclick="selectAll(false)">Limpiar Todo</button>
             </div>
 
@@ -251,6 +226,7 @@
             </div>
         </div>
 
+        <!-- PANTALLA DE JUEGO -->
         <div id="game-screen" class="screen">
             <div class="game-container">
                 <div id="game-progress" style="margin-bottom: 20px; color: var(--text-dim);"></div>
@@ -263,6 +239,7 @@
             </div>
         </div>
     </div>
+
     <script src="kanjiStudy.js"></script>
 </body>
 </html>
