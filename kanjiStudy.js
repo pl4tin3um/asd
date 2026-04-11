@@ -1,55 +1,45 @@
 const kanjiDatabase = {
-    "Nivel N5: Esenciales": [
+    "Numeros": [
         {
             title: "Números (1-5)",
             items: [
-                { kanji: "一", kana: "いち", romaji: "ichi" },
-                { kanji: "二", kana: "に", romaji: "ni" },
-                { kanji: "三", kana: "さん", romaji: "san" },
-                { kanji: "四", kana: "よん", romaji: "yon" },
-                { kanji: "五", kana: "ご", romaji: "go" }
+                { kanji: "一", kana: "いち", romaji: "ichi",significado: "uno" },
+                { kanji: "二", kana: "に", romaji: "ni",significado: "dos" },
+                { kanji: "三", kana: "さん", romaji: "san",significado: "tres" },
+                { kanji: "四", kana: "よん", romaji: "yon",significado: "cuatro" },
+                { kanji: "五", kana: "ご", romaji: "go",significado: "cinco" }
             ]
         },
         {
             title: "Números (6-10)",
             items: [
-                { kanji: "六", kana: "ろく", romaji: "roku" },
-                { kanji: "七", kana: "なな", romaji: "nana" },
-                { kanji: "八", kana: "はち", romaji: "hachi" },
-                { kanji: "九", kana: "きゅう", romaji: "kyuu" },
-                { kanji: "十", kana: "じゅう", romaji: "juu" }
+                { kanji: "六", kana: "ろく", romaji: "roku",significado: "seis" },
+                { kanji: "七", kana: "なな", romaji: "nana",significado: "siete" },
+                { kanji: "八", kana: "はち", romaji: "hachi",significado: "ocho" },
+                { kanji: "九", kana: "きゅう", romaji: "kyuu",significado: "nueve" },
+                { kanji: "十", kana: "じゅう", romaji: "juu",significado: "diez" }
             ]
         },
-        {
-            title: "Dinero y Cantidad",
-            items: [
-                { kanji: "百", kana: "ひゃく", romaji: "hyaku" },
-                { kanji: "千", kana: "せん", romaji: "sen" },
-                { kanji: "万", kana: "まん", romaji: "man" },
-                { kanji: "円", kana: "えん", romaji: "en" },
-                { kanji: "半", kana: "はん", romaji: "han" }
-            ]
-        }
     ],
     "Naturaleza": [
         {
             title: "Elementos",
             items: [
-                { kanji: "水", kana: "みず", romaji: "mizu" },
-                { kanji: "火", kana: "ひ", romaji: "hi" },
-                { kanji: "木", kana: "き", romaji: "ki" },
-                { kanji: "土", kana: "つち", romaji: "tsuchi" },
-                { kanji: "金", kana: "かね", romaji: "kane" }
+                { kanji: "水", kana: "みず", romaji: "mizu",significado: "agua" },
+                { kanji: "火", kana: "ひ", romaji: "hi",significado: "fuego" },
+                { kanji: "木", kana: "き", romaji: "ki",significado: "madera" },
+                { kanji: "土", kana: "つち", romaji: "tsuchi",significado: "tierra" },
+                { kanji: "金", kana: "かね", romaji: "kane",significado: "oro" }
             ]
         },
         {
             title: "Geografía",
             items: [
-                { kanji: "山", kana: "やま", romaji: "yama" },
-                { kanji: "川", kana: "かわ", romaji: "kawa" },
-                { kanji: "田", kana: "た", romaji: "ta" },
-                { kanji: "石", kana: "いし", romaji: "ishi" },
-                { kanji: "空", kana: "そら", romaji: "sora" }
+                { kanji: "山", kana: "やま", romaji: "yama",significado: "montaña" },
+                { kanji: "川", kana: "かわ", romaji: "kawa",significado: "río" },
+                { kanji: "田", kana: "た", romaji: "ta",significado: "arrozal" },
+                { kanji: "石", kana: "いし", romaji: "ishi",significado: "piedra" },
+                { kanji: "空", kana: "そら", romaji: "sora",significado: "cielo" }
             ]
         }
     ],
@@ -57,11 +47,11 @@ const kanjiDatabase = {
         {
             title: "Días de la Semana",
             items: [
-                { kanji: "月", kana: "げつ", romaji: "getsu" },
-                { kanji: "火", kana: "か", romaji: "ka" },
-                { kanji: "水", kana: "すい", romaji: "sui" },
-                { kanji: "木", kana: "もく", romaji: "moku" },
-                { kanji: "金", kana: "きん", romaji: "kin" }
+                { kanji: "月", kana: "げつ", romaji: "getsu",significado: "lunes" },
+                { kanji: "火", kana: "か", romaji: "ka",significado: "martes" },
+                { kanji: "水", kana: "すい", romaji: "sui",significado: "miércoles" },
+                { kanji: "木", kana: "もく", romaji: "moku",significado: "jueves" },
+                { kanji: "金", kana: "きん", romaji: "kin",significado: "viernes" }
             ]
         }
     ],
@@ -69,11 +59,11 @@ const kanjiDatabase = {
         {
             title: "Partes del Cuerpo",
             items: [
-                { kanji: "目", kana: "め", romaji: "me" },
-                { kanji: "耳", kana: "みみ", romaji: "mimi" },
-                { kanji: "口", kana: "くち", romaji: "kuchi" },
-                { kanji: "手", kana: "て", romaji: "te" },
-                { kanji: "足", kana: "あし", romaji: "ashi" }
+                { kanji: "目", kana: "め", romaji: "me",significado: "ojo" },
+                { kanji: "耳", kana: "みみ", romaji: "mimi",significado: "oreja" },
+                { kanji: "口", kana: "くち", romaji: "kuchi",significado: "boca" },
+                { kanji: "手", kana: "て", romaji: "te",significado: "mano" },
+                { kanji: "足", kana: "あし", romaji: "ashi",significado: "pie" }
             ]
         }
     ],
@@ -81,18 +71,19 @@ const kanjiDatabase = {
         {
             title: "Posiciones",
             items: [
-                { kanji: "上", kana: "うえ", romaji: "ue" },
-                { kanji: "下", kana: "した", romaji: "shita" },
-                { kanji: "左", kana: "ひだり", romaji: "hidari" },
-                { kanji: "右", kana: "みぎ", romaji: "migi" },
-                { kanji: "中", kana: "なか", romaji: "naka" }
+                { kanji: "上", kana: "うえ", romaji: "ue",significado: "arriba" },
+                { kanji: "下", kana: "した", romaji: "shita",significado: "abajo" },
+                { kanji: "左", kana: "ひだり", romaji: "hidari",significado: "izquierda" },
+                { kanji: "右", kana: "みぎ", romaji: "migi",significado: "derecha" },
+                { kanji: "中", kana: "なか", romaji: "naka",significado: "centro" }
             ]
         }
+
     ]
 };
 
 let selectedGroups = new Set();
-let currentTab = "Nivel N5: Esenciales";
+let currentTab = "Numeros";
 let studyQueue = [];
 let currentItemIndex = 0;
 
@@ -185,8 +176,7 @@ function startStudySession() {
     });
 
     // Mezclar el mazo
-    studyQueue.sort(() => Math.random() - 0.5);
-    currentItemIndex = 0;
+        sortear();
 
     // Cambiar de pantalla
     document.getElementById('setup-screen').classList.remove('active-screen');
@@ -194,17 +184,17 @@ function startStudySession() {
     
     loadNextItem();
 }
+ function sortear() {
+         studyQueue.sort(() => Math.random() - 0.5);
+        currentItemIndex = 0;
+ }
 
 function loadNextItem() {
-    if (currentItemIndex >= studyQueue.length) {
-        alert("¡Has terminado la sesión!");
-        location.reload();
-        return;
-    }
 
     const item = studyQueue[currentItemIndex];
     document.getElementById('current-kanji').innerText = item.kanji;
     document.getElementById('current-kana').innerText = item.kana;
+    document.getElementById('current-significado').innerText = item.significado;
     document.getElementById('game-progress').innerText = `Kanjis restantes: ${studyQueue.length - currentItemIndex}`;
     document.getElementById('answer-input').value = "";
     document.getElementById('answer-input').focus();
@@ -219,6 +209,9 @@ document.getElementById('answer-input').addEventListener('keypress', function (e
 
         if (val === correct) {
             currentItemIndex++;
+            if (currentItemIndex >= studyQueue.length) {
+                sortear();
+            }
             loadNextItem();
         } else {
             document.getElementById('feedback').innerText = "Incorrecto, intenta de nuevo";
