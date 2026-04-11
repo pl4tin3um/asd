@@ -3,31 +3,21 @@ const kanjiDatabase = {
         {
             title: "Números (1-5)",
             items: [
-                { kanji: "一", kana: "いち", romaji: "ichi" },
-                { kanji: "二", kana: "に", romaji: "ni" },
-                { kanji: "三", kana: "さん", romaji: "san" },
-                { kanji: "四", kana: "よん", romaji: "yon" },
-                { kanji: "五", kana: "ご", romaji: "go" }
+                { kanji: "一", kana: "いち", romaji: "ichi", mean: "uno" },
+                { kanji: "二", kana: "ni", romaji: "dos", mean: "dos" },
+                { kanji: "三", kana: "san", romaji: "tres", mean: "tres" },
+                { kanji: "四", kana: "yon", romaji: "cuatro", mean: "cuatro" },
+                { kanji: "五", kana: "go", romaji: "cinco", mean: "cinco" }
             ]
         },
         {
             title: "Números (6-10)",
             items: [
-                { kanji: "六", kana: "ろく", romaji: "roku" },
-                { kanji: "七", kana: "なな", romaji: "nana" },
-                { kanji: "八", kana: "はち", romaji: "hachi" },
-                { kanji: "九", kana: "きゅう", romaji: "kyuu" },
-                { kanji: "十", kana: "じゅう", romaji: "juu" }
-            ]
-        },
-        {
-            title: "Dinero y Cantidad",
-            items: [
-                { kanji: "百", kana: "ひゃく", romaji: "hyaku" },
-                { kanji: "千", kana: "せん", romaji: "sen" },
-                { kanji: "万", kana: "まん", romaji: "man" },
-                { kanji: "円", kana: "えん", romaji: "en" },
-                { kanji: "半", kana: "はん", romaji: "han" }
+                { kanji: "六", kana: "ろく", romaji: "seis", mean: "seis" },
+                { kanji: "七", kana: "nana", romaji: "siete", mean: "siete" },
+                { kanji: "八", kana: "hachi", romaji: "ocho", mean: "ocho" },
+                { kanji: "九", kana: "kyuu", romaji: "nueve", mean: "nueve" },
+                { kanji: "十", kana: "juu", romaji: "diez", mean: "diez" }
             ]
         }
     ],
@@ -35,57 +25,9 @@ const kanjiDatabase = {
         {
             title: "Elementos",
             items: [
-                { kanji: "水", kana: "みず", romaji: "mizu" },
-                { kanji: "火", kana: "ひ", romaji: "hi" },
-                { kanji: "木", kana: "き", romaji: "ki" },
-                { kanji: "土", kana: "つち", romaji: "tsuchi" },
-                { kanji: "金", kana: "かね", romaji: "kane" }
-            ]
-        },
-        {
-            title: "Geografía",
-            items: [
-                { kanji: "山", kana: "やま", romaji: "yama" },
-                { kanji: "川", kana: "かわ", romaji: "kawa" },
-                { kanji: "田", kana: "た", romaji: "ta" },
-                { kanji: "石", kana: "いし", romaji: "ishi" },
-                { kanji: "空", kana: "そら", romaji: "sora" }
-            ]
-        }
-    ],
-    "Tiempo": [
-        {
-            title: "Días de la Semana",
-            items: [
-                { kanji: "月", kana: "げつ", romaji: "getsu" },
-                { kanji: "火", kana: "か", romaji: "ka" },
-                { kanji: "水", kana: "すい", romaji: "sui" },
-                { kanji: "木", kana: "もく", romaji: "moku" },
-                { kanji: "金", kana: "きん", romaji: "kin" }
-            ]
-        }
-    ],
-    "Cuerpo y Personas": [
-        {
-            title: "Partes del Cuerpo",
-            items: [
-                { kanji: "目", kana: "め", romaji: "me" },
-                { kanji: "耳", kana: "みみ", romaji: "mimi" },
-                { kanji: "口", kana: "くち", romaji: "kuchi" },
-                { kanji: "手", kana: "て", romaji: "te" },
-                { kanji: "足", kana: "あし", romaji: "ashi" }
-            ]
-        }
-    ],
-    "Direcciones": [
-        {
-            title: "Posiciones",
-            items: [
-                { kanji: "上", kana: "うえ", romaji: "ue" },
-                { kanji: "下", kana: "した", romaji: "shita" },
-                { kanji: "左", kana: "ひだり", romaji: "hidari" },
-                { kanji: "右", kana: "みぎ", romaji: "migi" },
-                { kanji: "中", kana: "なか", romaji: "naka" }
+                { kanji: "水", kana: "mizu", romaji: "mizu", mean: "agua" },
+                { kanji: "火", kana: "hi", romaji: "hi", mean: "fuego" },
+                { kanji: "木", kana: "ki", romaji: "ki", mean: "árbol" }
             ]
         }
     ]
@@ -95,134 +37,170 @@ let selectedGroups = new Set();
 let currentTab = "Nivel N5: Esenciales";
 let studyQueue = [];
 let currentItemIndex = 0;
+let glossaryOpen = false;
 
 function init() {
-    renderTabs();
+    updateTabVisuals();
     renderGroups();
 }
 
-function renderTabs() {
-    const container = document.getElementById('category-tabs');
-    container.innerHTML = "";
-    Object.keys(kanjiDatabase).forEach(cat => {
-        const btn = document.createElement('button');
-        btn.className = `tab-btn ${cat === currentTab ? 'active' : ''}`;
-        btn.innerText = cat;
-        btn.onclick = () => {
-            currentTab = cat;
-            renderTabs();
-            renderGroups();
-        };
-        container.appendChild(btn);
+function setTab(tab) {
+    currentTab = tab;
+    updateTabVisuals();
+    
+    if (glossaryOpen) {
+        renderGlossary();
+    } else {
+        renderGroups();
+    }
+}
+
+function updateTabVisuals() {
+    const tabs = document.querySelectorAll('.tab-btn[data-cat]');
+    tabs.forEach(tab => {
+        if (tab.getAttribute('data-cat') === currentTab) {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
     });
 }
 
 function renderGroups() {
+    const setup = document.getElementById('setup-screen');
+    const glossary = document.getElementById('glossary-screen');
+    const game = document.getElementById('game-screen');
+
+    setup.classList.add('active-screen');
+    glossary.classList.remove('active-screen');
+    game.classList.remove('active-screen');
+
     const container = document.getElementById('groups-container');
     container.innerHTML = "";
     
-    const groups = kanjiDatabase[currentTab];
+    const groups = kanjiDatabase[currentTab] || [];
     groups.forEach(group => {
         const card = document.createElement('div');
         const isSelected = selectedGroups.has(group.title);
         card.className = `group-card ${isSelected ? 'selected' : ''}`;
-        
         card.innerHTML = `
             <span class="group-title">${group.title}</span>
             <div class="kanji-mini-grid">
-                ${group.items.map(k => `
-                    <div class="mini-char">
-                        <b>${k.kanji}</b>
-                        <span>${k.kana}</span> 
-                    </div>
-                `).join('')}
-            </div>
-        `;
-        
+                ${group.items.map(k => `<div class="mini-char"><b>${k.kanji}</b><span>${k.kana}</span></div>`).join('')}
+            </div>`;
         card.onclick = () => toggleGroup(group.title, card);
         container.appendChild(card);
     });
 }
 
-function toggleGroup(title, element) {
-    if (selectedGroups.has(title)) {
-        selectedGroups.delete(title);
-        element.classList.remove('selected');
-    } else {
-        selectedGroups.add(title);
-        element.classList.add('selected');
-    }
-    updateCount();
-}
+function renderGlossary() {
+    const container = document.getElementById('glossary-container');
+    container.innerHTML = "";
+    const groups = kanjiDatabase[currentTab] || [];
 
-function selectAll(bool) {
-    const groupsInTab = kanjiDatabase[currentTab];
-    groupsInTab.forEach(g => {
-        if (bool) selectedGroups.add(g.title);
-        else selectedGroups.delete(g.title);
+    groups.forEach(group => {
+        const card = document.createElement('div');
+        card.className = 'group-card';
+        card.innerHTML = `
+            <span class="group-title">${currentTab} - ${group.title}</span>
+            <div class="kanji-mini-grid">
+                ${group.items.map(k => `
+                    <div class="mini-char" style="width: 100px; height: 120px;">
+                        <b style="font-size: 32px;">${k.kanji}</b>
+                        <span style="font-size: 18px; color: var(--accent);">${k.mean || '---'}</span>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+        container.appendChild(card);
     });
-    renderGroups();
-    updateCount();
 }
 
-function updateCount() {
+function toggleGlossary() {
+    const setup = document.getElementById('setup-screen');
+    const glossary = document.getElementById('glossary-screen');
+    const btn = document.getElementById('glossary-btn');
+
+    glossaryOpen = !glossaryOpen;
+
+    if (glossaryOpen) {
+        setup.classList.remove('active-screen');
+        glossary.classList.add('active-screen');
+        btn.classList.add('active');
+        renderGlossary();
+    } else {
+        glossary.classList.remove('active-screen');
+        setup.classList.add('active-screen');
+        btn.classList.remove('active');
+        renderGroups();
+    }
+}
+
+function toggleGroup(title, element) {
+    if (selectedGroups.has(title)) { 
+        selectedGroups.delete(title); 
+        element.classList.remove('selected'); 
+    } else { 
+        selectedGroups.add(title); 
+        element.classList.add('selected'); 
+    }
     document.getElementById('count').innerText = selectedGroups.size;
 }
 
-// --- ARREGLO DEL BOTÓN ESTUDIAR ---
+function selectAll(bool) {
+    const groups = kanjiDatabase[currentTab] || [];
+    groups.forEach(g => bool ? selectedGroups.add(g.title) : selectedGroups.delete(g.title));
+    renderGroups();
+    document.getElementById('count').innerText = selectedGroups.size;
+}
+
 function startStudySession() {
-    if (selectedGroups.size === 0) {
-        alert("¡Selecciona al menos un grupo!");
-        return;
-    }
-
-    // Llenar la cola de estudio con los items de los grupos seleccionados
+    if (selectedGroups.size === 0) return alert("¡Selecciona algo!");
     studyQueue = [];
-    Object.values(kanjiDatabase).flat().forEach(group => {
-        if (selectedGroups.has(group.title)) {
-            studyQueue.push(...group.items);
-        }
+    Object.values(kanjiDatabase).flat().forEach(g => { 
+        if (selectedGroups.has(g.title)) studyQueue.push(...g.items); 
     });
-
-    // Mezclar el mazo
     studyQueue.sort(() => Math.random() - 0.5);
     currentItemIndex = 0;
-
-    // Cambiar de pantalla
-    document.getElementById('setup-screen').classList.remove('active-screen');
-    document.getElementById('game-screen').classList.add('active-screen');
     
+    glossaryOpen = false; 
+    document.getElementById('setup-screen').classList.remove('active-screen');
+    document.getElementById('glossary-screen').classList.remove('active-screen');
+    document.getElementById('game-screen').classList.add('active-screen');
     loadNextItem();
 }
 
 function loadNextItem() {
     if (currentItemIndex >= studyQueue.length) {
-        alert("¡Has terminado la sesión!");
+        alert("¡Sesión terminada!");
         location.reload();
         return;
     }
-
     const item = studyQueue[currentItemIndex];
     document.getElementById('current-kanji').innerText = item.kanji;
     document.getElementById('current-kana').innerText = item.kana;
-    document.getElementById('game-progress').innerText = `Kanjis restantes: ${studyQueue.length - currentItemIndex}`;
     document.getElementById('answer-input').value = "";
     document.getElementById('answer-input').focus();
-    document.getElementById('feedback').innerText = "";
+    document.getElementById('game-progress').innerText = `Kanjis: ${currentItemIndex + 1} / ${studyQueue.length}`;
 }
 
-// Escuchar la tecla Enter en el input
-document.getElementById('answer-input').addEventListener('keypress', function (e) {
+document.getElementById('answer-input')?.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         const val = this.value.toLowerCase().trim();
-        const correct = studyQueue[currentItemIndex].romaji;
-
+        const correct = studyQueue[currentItemIndex].romaji.toLowerCase();
+        const feedback = document.getElementById('feedback');
+        
         if (val === correct) {
+            feedback.innerText = "¡Correcto!";
+            feedback.style.color = "var(--accent)";
             currentItemIndex++;
-            loadNextItem();
+            setTimeout(() => {
+                feedback.innerText = "";
+                loadNextItem();
+            }, 800);
         } else {
-            document.getElementById('feedback').innerText = "Incorrecto, intenta de nuevo";
-            document.getElementById('feedback').style.color = "var(--error)";
+            feedback.innerText = `Incorrecto. Era: ${correct}`;
+            feedback.style.color = "var(--error)";
         }
     }
 });
