@@ -1,25 +1,20 @@
 const kanjiDatabase = {
     "Numeros": [
         {
-            title: "Números (1-5)",
+            title: "Números (1-10)",
             items: [
                 { kanji: "一", kana: "いち", romaji: "ichi",significado: "uno" },
                 { kanji: "二", kana: "に", romaji: "ni",significado: "dos" },
                 { kanji: "三", kana: "さん", romaji: "san",significado: "tres" },
                 { kanji: "四", kana: "よん", romaji: "yon",significado: "cuatro" },
-                { kanji: "五", kana: "ご", romaji: "go",significado: "cinco" }
-            ]
-        },
-        {
-            title: "Números (6-10)",
-            items: [
+                { kanji: "五", kana: "ご", romaji: "go",significado: "cinco" },
                 { kanji: "六", kana: "ろく", romaji: "roku",significado: "seis" },
                 { kanji: "七", kana: "なな", romaji: "nana",significado: "siete" },
                 { kanji: "八", kana: "はち", romaji: "hachi",significado: "ocho" },
                 { kanji: "九", kana: "きゅう", romaji: "kyuu",significado: "nueve" },
                 { kanji: "十", kana: "じゅう", romaji: "juu",significado: "diez" }
             ]
-        },
+        }
     ],
     "Naturaleza": [
         {
@@ -219,5 +214,57 @@ document.getElementById('answer-input').addEventListener('keypress', function (e
         }
     }
 });
+
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("open");
+}
+
+function toggleSettings() {
+    document.getElementById("settingsPanel").classList.toggle("open");
+}
+//======================================
+
+
+function setTheme(theme) {
+    document.body.className = theme;
+    const header = document.querySelector("header");
+    if (header) {
+        header.className = `header ${theme}`;
+    }
+    
+
+    localStorage.setItem('selectedTheme', theme);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem('selectedTheme');
+
+
+    if (savedTheme) {
+        setTheme(savedTheme);
+    }
+});
+
+//======================================
+
+
+
+const items = document.querySelectorAll('.menu-item');
+
+items.forEach(item => {
+    item.addEventListener('click', () => {
+        const texto = item.innerText.toLowerCase();
+
+        if (texto.includes('kana')) {
+            window.location.href = 'kanastudy.html';
+        } else if (texto.includes('who i am')) {
+            window.location.href = 'WhoIam.html';
+        }   else if (texto.includes('kanji')) {
+            window.location.href = 'kanjiStudy.html';
+        }
+    });
+});
+//======================================
 
 init();

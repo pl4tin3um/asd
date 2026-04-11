@@ -299,9 +299,12 @@ input#respuesta:focus {
     color: white;
     cursor: pointer;
 }
-.title{
-top: 50%;
+body.thematic .settings-panel button {
+    background: rgba(255, 255, 255, 0.3);
+    color: #222;
+    border: 1px solid #393939;
 }
+
 
 header.light {
     color: #000000;
