@@ -7,19 +7,23 @@
     <link rel="stylesheet" href="kanastudyCS.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body>
-    
-  <a href="index.html" class="menu-btn">
-    <img src="src/miku.png" alt="Inicio">
-    </a>
+<header>
+    <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+        <a href="index.html" class="menu-btn">
+        <img src="src/miku.png" alt="Inicio">
+         </a>
 
-        <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
-
-
+ <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+    <h1><span class="title">Kana Study</span></h1>
+    <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
     <div class="settings-panel" id="settingsPanel">
         <h3>Themes</h3>
-        <button  onclick="setTheme('light')">Default</button>
-        <button  onclick="setTheme('thematic')">Thematic</button>
+        <button onclick="setTheme('light')">Light</button>
+        <button onclick="setTheme('dark')">Dark</button>
+        <button onclick="setTheme('thematic')">Thematic</button>
+
+
+
     <h3>Language</h3>
 
     <select id="languageSelect" onchange="setLanguage(this.value)">
@@ -32,7 +36,12 @@
 
     </select>
     </div>
+    <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+    </header>
 
+    
+<main>
+    
 <div class="card">
 
 
@@ -141,7 +150,7 @@
         <div id="feedback"></div>
     </div>
 </div>
+</main>
 
 <script src="kanastudyJS.js"></script>
-</body>
 </html>
