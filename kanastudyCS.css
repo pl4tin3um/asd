@@ -354,7 +354,6 @@ body.thematic .settings-panel {
 
     .grid-checks {
         grid-template-columns: repeat(2, 1fr);
-        width: fit-content;
         gap: 4px;
     }
 
