@@ -351,8 +351,17 @@ body.thematic .settings-panel {
 }
 
 @media screen and (max-width: 480px) {
- .check-item {
- grid-template-columns: repeat(2);
- }
 
+    .grid-checks {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .card {
+        width: 90%; 
+        padding: 1.5rem;
+    }
+
+    .check-item span {
+        font-size: 0.7rem;
+    }
 }
