@@ -223,7 +223,6 @@ function toggleSidebar() {
 function toggleSettings() {
     document.getElementById("settingsPanel").classList.toggle("open");
 }
-//======================================
 
 
 function setTheme(theme) {

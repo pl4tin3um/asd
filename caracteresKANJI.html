@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Visualizador de Kanji - Compacto</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+    /* VARIABLES DE COLOR (Originales) */
+    :root {
+        --color-bg: #0f172a;
+        --color-card-bg: rgba(30, 41, 59, 0.7);
+        --color-char: #ffffff;
+        --color-romaji: #38bdf8;
+        --color-meaning: #94a3b8; /* NUEVO: Color para el significado */
+        --border-color: #334155;
+        --accent: #3d5afe;
+    }
+            header {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #565656;
+            border-bottom: 3px solid #6f6f6f;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        header.light { background-color: #b9b9b9; border-bottom: 3px solid #000; color: #000; }
+        header.thematic { background: rgba(255, 255, 255, 0.3); color: #222; border-bottom: 3px solid #393939; }
+
+    body.thematic {
+        --color-bg: #222;
+        --color-card-bg: rgba(248, 246, 232, 0.95);
+        --color-char: #000;
+        --color-romaji: #555;
+        --color-meaning: #666;
+        --border-color: #000;
+        --accent: #d946ef;
+        background-image: url('src/backgroundVerCaracteres.jpg');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    /* ESTILOS DE CUERPO Y NAVEGACIÓN (Originales) */
+    body {
+        font-family: 'Segoe UI', "Yu Gothic", sans-serif;
+        background-color: var(--color-bg);
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 5px;
+        color: white; /* Asegura contraste por defecto */
+    }
+
+    .menu { 
+        display: flex; 
+        flex-wrap: wrap; 
+        gap: 6px; 
+        justify-content: center; 
+        padding: 10px 0;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background: var(--color-bg);
+        width: 100%;
+    }
+    .menu-btn {
+    position: absolute;
+    left: 20px;    
+    top: 50%;         
+    transform: translateY(-50%); 
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s;
+    border-radius: 10px;
+}
+
+.menu-btn img {
+    width: 50px; 
+    height: 50px;
+    object-fit: cover;
+    border-radius: 50%; 
+    transition: 0.3s;
+}
+.menu-btn img:hover {
+    transform: scale(1.1);
+}
+
+
+.settings-btn {
+    position: absolute;
+    right: 20px;    
+    top: 50%;         
+    transform: translateY(-50%); 
+    font-size: 24px;
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s;
+    border-radius: 10px;
+}
+
+.settings-btn:hover {
+    transform: rotate(45deg) scale(1.1);
+}
+
+.settings-panel {
+    position: fixed;
+    right: -350px;
+    top: 0;
+    width: 260px;
+    height: 100%;
+    background: #1e293b;
+    padding: 25px;
+    transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 500;
+    border-left: 1px solid #334155;
+}
+
+.settings-panel.open {
+    right: 0;
+    box-shadow: -10px 0 50px rgba(0,0,0,0.6);
+}
+.settings-panel button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    background: #333;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+body.thematic .settings-panel button {
+    background: rgba(255, 255, 255, 0.3);
+    color: #222;
+    border: 1px solid #393939;
+}
+
+    button {
+        padding: 6px 12px;
+        border: 1px solid #334155;
+        background: #1e293b;
+        color: white;
+        cursor: pointer;
+        border-radius: 12px;
+        font-weight: bold;
+        font-size: 12px;
+        transition: 0.2s;
+    }
+
+    button.active { 
+        background: var(--accent); 
+        border-color: var(--color-romaji);
+    }
+
+    h2 { 
+        color: var(--color-romaji); 
+        font-size: 1rem; 
+        margin: 15px 0; 
+        text-align: center;
+        width: 100%;
+    }
+
+    /* --- CONTENEDOR MULTI-COLUMNA (Original adaptado para Kanji) --- */
+    .grid-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        justify-content: center;
+        max-width: 1200px;
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .group-row {
+        display: grid;
+        /* Aumentamos un poco el ancho (75px) para que el significado quepa */
+        grid-template-columns: repeat(5, 75px); 
+        gap: 6px;
+        background-color: var(--color-card-bg);
+        padding: 8px;
+        border-radius: 10px;
+        border-top: 3px solid var(--accent); /* Cambiado a top para mejor vista con Kanjis */
+        height: fit-content;
+    }
+
+    .card {
+        background-color: var(--color-card-bg);
+        padding: 8px 4px;
+        border-radius: 6px;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        width: 75px;
+        /* Necesitamos un alto mínimo para que el texto de significado no se corte */
+        min-height: 90px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+
+    .char { font-size: 26px; color: var(--color-char); font-weight: bold; line-height: 1.1; }
+    .kana-text { object-fit: cover; color: var(--color-romaji); margin: 2px 0; }
+    .meaning-text { object-fit: cover; color: var(--color-meaning); font-style: italic; }
+
+    .menu-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+    }
+
+    .menu-btn img {
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        transition: 0.3s;
+        border: 3px solid #334155;
+    }
+
+
+    @media (max-width: 500px) {
+        .group-row { grid-template-columns: repeat(3, 75px); }
+    }
+</style>
+</head>
+<header>
+    <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+        <a href="index.html" class="menu-btn">
+        <img src="src/miku.png" alt="Inicio">
+         </a>
+
+ <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+    <h1><span class="title">Kana Study</span></h1>
+    <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
+    <div class="settings-panel" id="settingsPanel">
+        <h3>Themes</h3>
+        <button onclick="setTheme('light')">Light</button>
+        <button onclick="setTheme('dark')">Dark</button>
+        <button onclick="setTheme('thematic')">Thematic</button>
+
+
+
+    <h3>Language</h3>
+
+    <select id="languageSelect" onchange="setLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="ja">にほん</option>
+        <option value="es">Español</option>
+        <option value="fr">Français</option>
+        <option value="de">Deutsch</option>
+        <option value="it">Italiano</option>
+
+    </select>
+    </div>
+    <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+    </header>
+<main>
+    <body>
+
+    <a href="kanjiStudy.html" class="menu-btn">
+        <img src="src/miku.png" alt="Inicio">
+    </a>
+
+    <div id="category-tabs" class="menu" style="background-color: transparent"></div>
+
+    <div id="kanji-display-area" style="width: 100%;"></div>
+</main>
+<script>
+const kanjiDatabase = {
+    "Numeros": [
+        {
+            title: "Números (1-10)",
+            items: [
+                { kanji: "一", kana: "いち", romaji: "ichi",significado: "uno" },
+                { kanji: "二", kana: "に", romaji: "ni",significado: "dos" },
+                { kanji: "三", kana: "さん", romaji: "san",significado: "tres" },
+                { kanji: "四", kana: "よん", romaji: "yon",significado: "cuatro" },
+                { kanji: "五", kana: "ご", romaji: "go",significado: "cinco" },
+                { kanji: "六", kana: "ろく", romaji: "roku",significado: "seis" },
+                { kanji: "七", kana: "なな", romaji: "nana",significado: "siete" },
+                { kanji: "八", kana: "はち", romaji: "hachi",significado: "ocho" },
+                { kanji: "九", kana: "きゅう", romaji: "kyuu",significado: "nueve" },
+                { kanji: "十", kana: "じゅう", romaji: "juu",significado: "diez" }
+            ]
+        }
+    ],
+    "Naturaleza": [
+        {
+            title: "Elementos",
+            items: [
+                { kanji: "水", kana: "みず", romaji: "mizu",significado: "agua" },
+                { kanji: "火", kana: "ひ", romaji: "hi",significado: "fuego" },
+                { kanji: "木", kana: "き", romaji: "ki",significado: "madera" },
+                { kanji: "土", kana: "つち", romaji: "tsuchi",significado: "tierra" },
+                { kanji: "金", kana: "かね", romaji: "kane",significado: "oro" }
+            ]
+        },
+        {
+            title: "Geografía",
+            items: [
+                { kanji: "山", kana: "やま", romaji: "yama",significado: "montaña" },
+                { kanji: "川", kana: "かわ", romaji: "kawa",significado: "río" },
+                { kanji: "田", kana: "た", romaji: "ta",significado: "arrozal" },
+                { kanji: "石", kana: "いし", romaji: "ishi",significado: "piedra" },
+                { kanji: "空", kana: "そら", romaji: "sora",significado: "cielo" }
+            ]
+        }
+    ],
+    "Tiempo": [
+        {
+            title: "Días de la Semana",
+            items: [
+                { kanji: "月", kana: "げつ", romaji: "getsu",significado: "lunes" },
+                { kanji: "火", kana: "か", romaji: "ka",significado: "martes" },
+                { kanji: "水", kana: "すい", romaji: "sui",significado: "miércoles" },
+                { kanji: "木", kana: "もく", romaji: "moku",significado: "jueves" },
+                { kanji: "金", kana: "きん", romaji: "kin",significado: "viernes" }
+            ]
+        }
+    ],
+    "Cuerpo y Personas": [
+        {
+            title: "Partes del Cuerpo",
+            items: [
+                { kanji: "目", kana: "め", romaji: "me",significado: "ojo" },
+                { kanji: "耳", kana: "みみ", romaji: "mimi",significado: "oreja" },
+                { kanji: "口", kana: "くち", romaji: "kuchi",significado: "boca" },
+                { kanji: "手", kana: "て", romaji: "te",significado: "mano" },
+                { kanji: "足", kana: "あし", romaji: "ashi",significado: "pie" }
+            ]
+        }
+    ],
+    "Direcciones": [
+        {
+            title: "Posiciones",
+            items: [
+                { kanji: "上", kana: "うえ", romaji: "ue",significado: "arriba" },
+                { kanji: "下", kana: "した", romaji: "shita",significado: "abajo" },
+                { kanji: "左", kana: "ひだり", romaji: "hidari",significado: "izquierda" },
+                { kanji: "右", kana: "migi", romaji: "migi",significado: "derecha" },
+                { kanji: "中", kana: "なか", romaji: "naka",significado: "centro" }
+            ]
+        }
+    ]
+};
+
+// --- LOGICA DE RENDERIZADO VISUAL ---
+
+let currentTab = "Numeros"; // Categoría inicial
+
+function initVisualizer() {
+    renderTabs();
+    renderGrid();
+}
+
+function renderTabs() {
+    const container = document.getElementById('category-tabs');
+    if (!container) return;
+    
+    container.innerHTML = "";
+    Object.keys(kanjiDatabase).forEach(cat => {
+        const btn = document.createElement('button');
+        // Clase active si coincide
+        btn.className = cat === currentTab ? 'active' : '';
+        btn.innerText = cat;
+        btn.onclick = () => {
+            currentTab = cat;
+            renderTabs(); // Re-render para actualizar el botón activo
+            renderGrid();
+        };
+        container.appendChild(btn);
+    });
+}
+
+function renderGrid() {
+    const displayArea = document.getElementById('kanji-display-area');
+    if (!displayArea) return;
+    
+    displayArea.innerHTML = ""; // Limpiar antes de dibujar
+    const groups = kanjiDatabase[currentTab];
+
+    groups.forEach(group => {
+        // Título del grupo
+        const title = document.createElement("h2");
+        title.innerText = group.title;
+        displayArea.appendChild(title);
+
+        // Contenedor grid-wrapper
+        const wrapper = document.createElement("div");
+        wrapper.className = "grid-wrapper";
+
+        const row = document.createElement("div");
+        row.className = "group-row";
+
+        group.items.forEach(item => {
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <span class="char">${item.kanji}</span>
+                <span class="kana-text">${item.kana}</span>
+                <span class="meaning-text">${item.significado}</span>
+            `;
+            row.appendChild(card);
+        });
+
+        wrapper.appendChild(row);
+        displayArea.appendChild(wrapper);
+    });
+}
+function toggleSidebar() {
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("open");
+}
+
+function toggleSettings() {
+    document.getElementById("settingsPanel").classList.toggle("open");
+}
+
+
+function setTheme(theme) {
+    document.body.className = theme;
+    const header = document.querySelector("header");
+    if (header) {
+        header.className = `header ${theme}`;
+    }
+    
+
+    localStorage.setItem('selectedTheme', theme);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const savedTheme = localStorage.getItem('selectedTheme');
+
+
+    if (savedTheme) {
+        setTheme(savedTheme);
+    }
+});
+
+
+// Inicializar al cargar
+initVisualizer();
+
+</script>
+</body>
+</html>
