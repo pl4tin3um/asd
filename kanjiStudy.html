@@ -187,6 +187,7 @@
 
         .game-container { margin-top: 50px; background: var(--card-bg); padding: 40px; border-radius: 20px; display: inline-block; }
         .kanji-display { font-size: 100px; color: var(--primary); }
+        .kana-hint {font-size: 30px; color: var(--primary)}
     </style>
 </head>
 <body>
@@ -237,6 +238,7 @@
         <div id="game-screen" class="screen">
             <div class="game-container">
                 <div id="game-progress" style="margin-bottom: 20px; color: var(--text-dim);"></div>
+                <div id="game-laps" style="margin-bottom: 20px; color: var(--text-dim);">< </div>
                 <div class="kanji-display" id="current-kanji"></div>
                 <div class="kana-hint" id="current-kana"></div>
                 <div class="kana-hint" id="current-significado"></div>

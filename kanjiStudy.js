@@ -81,6 +81,7 @@ let selectedGroups = new Set();
 let currentTab = "Numeros";
 let studyQueue = [];
 let currentItemIndex = 0;
+let currentLaps = 0;
 
 function init() {
     renderTabs();
@@ -191,6 +192,7 @@ function loadNextItem() {
     document.getElementById('current-kana').innerText = item.kana;
     document.getElementById('current-significado').innerText = item.significado;
     document.getElementById('game-progress').innerText = `Kanjis restantes: ${studyQueue.length - currentItemIndex}`;
+    document.getElementById('game-laps').innerText = `Vueltas hechas: ${currentLaps}`;
     document.getElementById('answer-input').value = "";
     document.getElementById('answer-input').focus();
     document.getElementById('feedback').innerText = "";
@@ -205,6 +207,7 @@ document.getElementById('answer-input').addEventListener('keypress', function (e
         if (val === correct) {
             currentItemIndex++;
             if (currentItemIndex >= studyQueue.length) {
+                currentLaps++;
                 sortear();
             }
             loadNextItem();
