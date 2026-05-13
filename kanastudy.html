@@ -8,7 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-    <!--========================================================================================-->
+<!--========================================================================================-->
+<!--=======================================Header===========================================-->
+<!--========================================================================================-->
         <header class="header">
 
     <!-----------------------------------LeftSide-------------------------------------------->
@@ -45,24 +47,20 @@
 
         </div>
     </header>
-    <!--========================================================================================-->
-
-    
+<!--========================================================================================-->
+<!--=======================================Seleccionador====================================-->
+<!--========================================================================================-->
 <main>
-    
 <div class="card">
-
-
-
 <div id="menu">        
 
-
+ <!--------------------------------------BotonesAutomaticos----------------------------------------->
     <div class="controles-seleccion">
         <button type="button" class="btn-sm" onclick="seleccionarTodo(true)">Todos</button>
         <button type="button" class="btn-sm" onclick="seleccionarTodo(false)">Ninguno</button>
         <button type="button" class="btn-sm" onclick="location.href='caracteres.html'">Ver Caracteres</button>
     </div>
-
+ <!--------------------------------------MenuDeSeleccion----------------------------------------->
 <div class="grid-checks-container" id="scrollContainer">
 
     <div id="sec-basicos" class="script-section">
@@ -140,11 +138,11 @@
         </div>
     </div>
 </div>
-
+ <!--------------------------------------Empezar----------------------------------------->
     <button class="btn-principal" onclick="iniciarSesion()">Empezar</button>
 </div>
 
-
+ <!--------------------------------------PantallaDeJuego----------------------------------------->
     <div id="juego" class="hidden">
         <div class="header-juego">
             <span id="score">Racha: 0 </span>
