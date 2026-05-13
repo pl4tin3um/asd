@@ -3,80 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>Kanario</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<header class="header">
-    <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
-    <div class="menu-btn" onclick="toggleSidebar()">
-    <img src="src/miku.png">
-    </div>
-       <div class="sidebar" id="sidebar">
-        <div class="social-buttons">
-            <a href="https://www.tiktok.com/@pl4tin3um" target="_blank">
-                <img src="https://logo.svgcdn.com/logos/tiktok.png" alt="mi tiktok" class="social-icon">
-            </a>
+
+<body class="thematic">
+
+
+    <!--========================================================================================-->
+        <header class="header">
+
+    <!-----------------------------------LeftSidebar-------------------------------------------->
+
+        <div class="menu-btn" onclick="toggleSidebar()">
+            <img src="src/miku.png" alt="Menú">
         </div>
-    </div>
 
- <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
- <body class="thematic"></body>
-    <h1><span class="title">Kana Study</span></h1>
-    <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
-    <div class="settings-panel" id="settingsPanel">
+    
+
+        <div class="sidebar" id="sidebar">
+            <div class="social-buttons"></div>
+        </div>
+
+    <!-----------------------------------HeaderMain--------------------------------------------->
+
+        <h1><span class="title">Kanario.com</span></h1>
+
+            <select id="languageSelect" onchange="setLanguage(this.value)">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="ja">日本語 (Nihongo)</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+            </select>
+
+    <!--------------------------------------SettingsBar----------------------------------------->
+
+        <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
+        <div class="settings-panel" id="settingsPanel">
+            
         <h3>Themes</h3>
-        <button onclick="setTheme('light')">Light</button>
-        <button onclick="setTheme('dark')">Dark</button>
-        <button onclick="setTheme('thematic')">Thematic</button>
+
+            <button onclick="setTheme('light')">Light</button>
+            <button onclick="setTheme('dark')">Dark</button>
+            <button onclick="setTheme('thematic')">Thematic</button>
 
 
-
-    <h3>Language</h3>
-
-    <select id="languageSelect" onchange="setLanguage(this.value)">
-        <option value="en">English</option>
-        <option value="ja">にほん</option>
-        <option value="es">Español</option>
-        <option value="fr">Français</option>
-        <option value="de">Deutsch</option>
-        <option value="it">Italiano</option>
-
-    </select>
-    </div>
-    <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+        </div>
     </header>
-<main>
-    <h1 class="logo" style="background-color: rgba(82, 82, 82, 0.5) ; border: 5px solid #000; border-radius: 10px;">Kanario.com Hecho por Kevin <span style="color: rgb(255, 0, 242);">"pl4tin3um"</span> Fontes.</h1>
+    <!--========================================================================================-->
 
-    <div class="menu">
-            <div class="menu-item">
-            <img src="src/bookana.png">
-            <span>Kana Study</span>
-            </div>
 
-            <div class="menu-item">
-            <img src="src/kanapaint.png">
-            <span>Kanji Study</span>
-            </div>
+    <main>
+        <h1 class="logo" style="background-color: rgba(82, 82, 82, 0.5); border: 5px solid #000; border-radius: 10px; text-align: center; padding: 10px;">
+            Hecho por Kevin <span style="color: rgb(255, 0, 242);">"pl4tin3um"</span> Fontes.
+        </h1>
 
-            <div class="menu-item"> 
-            <img src="src/yoWTF_x8.png">
-            <span>Quien soy?</span>
-            </div>
+        <div class="menu">
+            <div class="menu-item"><img src="src/bookana.png" alt="Kana Study"><span>Kana Study</span></div>
+            <div class="menu-item"><img src="src/kanapaint.png" alt="Kanji Study"><span>Kanji Study</span></div>
+            <div class="menu-item"><img src="src/yoWTF_x8.png" alt="Quién soy"><span>¿Quién soy?</span></div>
+            <div class="menu-itemUSELESS"> <span>にほん Explore <br> (En proceso)</span></div>
+            <div class="menu-itemUSELESS"> <span>Study Materials <br> (En proceso)</span></div>
+            <div class="menu-itemUSELESS"> <span>Let's play! <br> (En proceso)</span></div>
+        </div>
+    </main>
 
-            <div class="menu-itemUSELESS"> <span>にほん Explore <br> in process</span></div>
-            <div class="menu-itemUSELESS"> <span>Study Materials <br> in process</span></div>
-            <div class="menu-itemUSELESS"> <span>Lets play! <br> in process</span></div>
-        
-    </div>
-</main>
-
-    <script src="script.js"></script>
-</body>
- <footer class ="decoracion">
+    <footer class="decoracion" style="text-align: center; margin-top: 40px; padding: 20px;">
         <h3>"You don't have to be great to start, but you have to start to be great." – Zig Ziglar.</h3>
         <p>COPYRIGHT &copy; 2026 Kevin Fontes. Todos los derechos reservados.</p>
     </footer>
+
+    <script src="script.js"></script>
+    
 </body>
 </html>

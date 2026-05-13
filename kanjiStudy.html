@@ -45,9 +45,28 @@
             top: 0;
             z-index: 1000;
         }
-
         header.light { background-color: #b9b9b9; border-bottom: 3px solid #000; color: #000; }
         header.thematic { background: rgba(255, 255, 255, 0.3); color: #222; border-bottom: 3px solid #393939; }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            white-space: nowrap;
+        }
+
+        #languageSelect {
+            min-width: 60px;
+            width: auto;
+            margin-left: 20px;
+            size: auto;
+            background: #333;
+            color: white;
+            border: 1px solid #666;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+		body.thematic #languageSelect { background: rgba(255, 255, 255, 0.5); color: #000; }
 
         /* Contenedor principal */
         main {
@@ -189,29 +208,55 @@
         .kanji-display { font-size: 100px; color: var(--primary); }
         .kana-hint {font-size: 30px; color: var(--primary)}
     </style>
+<!--========================================================================================-->
+<!--       ██████╗  ███████╗ ███████╗                                                       -->
+<!--      ██╔════╝  ██╔════╝ ██╔════╝                                                       -->
+<!--      ██║       ███████╗ ███████╗                                                       -->
+<!--      ██║       ╚════██║ ╚════██║                                                       -->
+<!--      ╚██████╗  ███████║ ███████║                                                       -->
+<!--       ╚═════╝  ╚══════╝ ╚══════╝                                                       -->
+<!--========================================================================================-->
 </head>
 <body>
 
-<header>
-    <a href="index.html" class="menu-btn">
-        <img src="src/miku.png" alt="Inicio">
-    </a>
-    <h1><span class="title">Kana Study</span></h1>
-    <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
+   <!--========================================================================================-->
+        <header class="header">
+
+    <!-----------------------------------LeftSide-------------------------------------------->
+
+        <a href="index.html" class="menu-btn">
+            <img src="src/miku.png" alt="Inicio">
+        </a>
+
     
-    <div class="settings-panel" id="settingsPanel">
+    <!-----------------------------------HeaderMain--------------------------------------------->
+
+        <h1><span class="title">Kanario.com</span></h1>
+
+            <select id="languageSelect" onchange="setLanguage(this.value)">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="ja">日本語 (Nihongo)</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+            </select>
+
+    <!--------------------------------------SettingsBar----------------------------------------->
+
+        <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
+        <div class="settings-panel" id="settingsPanel">
+            
         <h3>Themes</h3>
-        <button onclick="setTheme('light')">Light</button>
-        <button onclick="setTheme('dark')">Dark</button>
-        <button onclick="setTheme('thematic')">Thematic</button>
-        <h3>Language</h3>
-        <select id="languageSelect" onchange="setLanguage(this.value)">
-            <option value="es">Español</option>
-            <option value="en">English</option>
-            <option value="ja">にほん</option>
-        </select>
-    </div>
-</header>
+
+            <button onclick="setTheme('light')">Light</button>
+            <button onclick="setTheme('dark')">Dark</button>
+            <button onclick="setTheme('thematic')">Thematic</button>
+
+
+        </div>
+    </header>
+    <!--========================================================================================-->
 
 <main>
     <div class="container">

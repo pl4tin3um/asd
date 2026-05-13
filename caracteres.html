@@ -1,286 +1,455 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<title>Caracteres Kana</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Kana Study</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-    :root {
-        --color-bg: #0f172a;
-        --color-card-bg: rgba(30, 41, 59, 0.7);
-        --color-char: #ffffff;
-        --color-romaji: #38bdf8;
-        --border-color: #334155;
-    }
+    <style>
+        /* =========================================
+            1. VARIABLES Y TEMAS GENERALES
+           ========================================= */
+        :root {
+            --color-bg: #0f172a;
+            --color-card-bg: rgba(30, 41, 59, 0.7);
+            --color-char: #ffffff;
+            --color-romaji: #38bdf8;
+            --border-color: #334155;
+        }
 
-    body.thematic {
-        --color-bg: #222;
-        --color-card-bg: rgba(248, 246, 232, 0.95);
-        --color-char: #000;
-        --color-romaji: #555;
-        --border-color: #000;
-        background-image: url('src/backgroundVerCaracteres.jpg');
-        background-size: cover;
-        background-position: center;
-        background-attachment: fixed;
-    }
+        
+        body {
+            font-family: 'Segoe UI', "Yu Gothic", sans-serif;
+            background-color: var(--color-bg);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0px;
+        }
+        body.light { --color-bg: #f8fafc; --color-card-bg: #ffffff; --color-char: #0f172a; --color-romaji: #2563eb; --border-color: #cbd5e1; background-color: var(--color-bg);}
+        body.thematic { --color-bg: #222; --color-card-bg: rgba(248, 246, 232, 0.95); --color-char: #000; --color-romaji: #555; --border-color: #000; background-image: url('src/backgroundVerCaracteres.jpg');background-size: cover;background-position: center;background-attachment: fixed;}
+        
+        /* =========================
+           HEADER Y NAVEGACIÓN
+          ========================== */
+        header {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #565656;
+            border-bottom: 3px solid #6f6f6f;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header.light { background-color: #b9b9b9; border-bottom: 3px solid #000; color: #000; }
+        header.thematic { background: rgba(255, 255, 255, 0.3); color: #222; border-bottom: 3px solid #393939; }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            white-space: nowrap;
+        }
 
-    body {
-        font-family: 'Segoe UI', "Yu Gothic", sans-serif;
-        background-color: var(--color-bg);
-        margin: 0;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding: 5px;
-    }
+        #languageSelect {
+            min-width: 60px;
+            width: auto;
+            margin-left: 20px;
+            size: auto;
+            background: #333;
+            color: white;
+            border: 1px solid #666;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+		body.thematic #languageSelect { background: rgba(255, 255, 255, 0.5); color: #000; }
 
-    /* Navegación Fija */
-    .menu { 
-        display: flex; 
-        flex-wrap: wrap; 
-        gap: 6px; 
-        justify-content: center; 
-        padding: 10px 0;
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: var(--color-bg);
-        width: 100%;
-    }
+        .menu-btn { position: absolute; left: 20px; z-index: 1100; }
 
-    button {
-        padding: 6px 12px;
-        border: none;
-        background: #1e293b;
-        color: white;
-        cursor: pointer;
-        border-radius: 12px;
-        font-weight: bold;
-        font-size: 12px;
-        border: 1px solid #334155;
-    }
+        .menu-btn img { 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 50%; 
+            border: 2px solid white; 
+            transition: 0.3s;
+        }
 
-    button.active { 
-        background: #3d5afe; 
-        border-color: #38bdf8;
-    }
+        .settings-btn { 
+            position: absolute; 
+            right: 20px; 
+            cursor: pointer; 
+            font-size: 24px; 
+            z-index: 2100; 
+        }
 
-    h2 { 
-        color: var(--color-romaji); 
-        font-size: 1rem; 
-        margin: 10px 0; 
-        text-align: center;
-        width: 100%;
-    }
+        /* Menú de Categorías (Botones) */
+        .menu { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 6px; 
+            justify-content: center; 
+            padding: 10px 0;
+            position: sticky;
+            top: 60px; /* Debajo del header */
+            z-index: 100;
+            background: transparent;
+            width: 100%;
+        }
 
-    /* --- CONTENEDOR MULTI-COLUMNA --- */
-    .grid-wrapper {
-        display: flex;
-        flex-wrap: wrap; /* Esto permite que se pongan uno al lado del otro */
-        gap: 15px;
-        justify-content: center;
-        max-width: 1200px;
-        width: 100%;
-    }
+        button {
+            padding: 6px 12px;
+            border: none;
+            background: #1e293b;
+            color: white;
+            cursor: pointer;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid #334155;
+            transition: 0.2s;
+        }
 
-    .group-row {
-        display: grid;
-        grid-template-columns: repeat(5, 60px); 
-        gap: 6px;
-        background-color: var(--color-card-bg);
-        padding: 8px;
-        border-radius: 10px;
-        border-left: 4px solid #38bdf8;
-        height: fit-content;
-    }
+        button.active { 
+            background: #3d5afe; 
+            border-color: #38bdf8;
+        }
 
-    .card {
-        background-color: var(--color-card-bg);
-        padding: 6px 0;
-        border-radius: 6px;
-        text-align: center;
-        border: 1px solid var(--border-color);
-        width: 60px;
-        height: 70px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-    .menu-btn {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-}
+        h2 { 
+            color: var(--color-romaji); 
+            font-size: 1rem; 
+            margin: 10px 0; 
+            text-align: center;
+            width: 100%;
+        }
 
-.menu-btn img {
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    transition: 0.3s;
-    border: 3px solid #334155;
-}
+        /* =========================================
+           3. PANEL LATERAL (AJUSTES)
+           ========================================= */
+        .settings-panel {
+            position: fixed; 
+            right: -300px; 
+            top: 0; 
+            width: 250px; 
+            height: 100%;
+            background: #1e293b; 
+            padding: 20px; 
+            padding-top: 70px; /* Espacio para el botón */
+            transition: 0.4s; 
+            z-index: 2000;
+            border-left: 2px solid var(--border-color);
+            color: white;
+        }
+        .settings-panel.open { right: 0; }
+        body.thematic .settings-panel {background-image: url('src/thematicRightSidebar.png');background-size: cover;border-left: 5px solid #111;}
 
+        .settings-panel button {
+            width: 100%; 
+            padding: 10px; 
+            margin-top: 5px; 
+            background: #333; 
+        }
+        body.thematic .settings-panel button {background: rgba(255, 255, 255, 0.3); color: #222; border: 1px solid #393939;}
 
-    .card.empty { visibility: hidden; }
+        .settings-panel select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+        }
 
-    .char { font-size: 24px; color: var(--color-char); line-height: 1; }
-    .romaji { font-size: 10px; color: var(--color-romaji); font-weight: bold; margin-top: 4px; }
+        /* =========================================
+           4. CONTENEDOR MULTI-COLUMNA Y TARJETAS
+           ========================================= */
+        .grid-wrapper {
+            display: flex;
+            flex-wrap: wrap; 
+            gap: 15px;
+            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+        }
 
-    .settings-btn { position: fixed; bottom: 20px; right: 20px; cursor: pointer; z-index: 1000; font-size: 24px; background: #1e293b; border-radius: 50%; padding: 5px; }
-    .hidden { display: none !important; }
+        .group-row {
+            display: grid;
+            grid-template-columns: repeat(5, 60px); 
+            gap: 6px;
+            background-color: var(--color-card-bg);
+            padding: 8px;
+            border-radius: 10px;
+            border-left: 4px solid #38bdf8;
+            height: fit-content;
+        }
 
-</style>
+        .card {
+            background-color: var(--color-card-bg);
+            padding: 6px 0;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            width: 60px;
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card.empty { visibility: hidden; }
+        .char { font-size: 24px; color: var(--color-char); line-height: 1; }
+        .romaji { font-size: 10px; color: var(--color-romaji); font-weight: bold; margin-top: 4px; }
+        .hidden { display: none !important; }
+
+    </style>
+<!--========================================================================================-->
+<!--       ██████╗  ███████╗ ███████╗                                                       -->
+<!--      ██╔════╝  ██╔════╝ ██╔════╝                                                       -->
+<!--      ██║       ███████╗ ███████╗                                                       -->
+<!--      ██║       ╚════██║ ╚════██║                                                       -->
+<!--      ╚██████╗  ███████║ ███████║                                                       -->
+<!--       ╚═════╝  ╚══════╝ ╚══════╝                                                       -->
+<!--========================================================================================-->
+
 </head>
-<body>
-    <a href="kanastudy.html" class="menu-btn">
-    <img src="src/miku.png" alt="Inicio">
-    </a>
 
-    <div class="settings-btn" onclick="document.body.classList.toggle('thematic')">🌓</div>
+<!--========================================================================================-->
+        <header class="header">
 
-    <div class="menu">
-        <button id="btn-h-basic" class="active" onclick="showSection('h-basic')">Hiragana</button>
-        <button id="btn-h-combo" onclick="showSection('h-combo')">H-Compuestos</button>
-        <button id="btn-k-basic" onclick="showSection('k-basic')">Katakana</button>
-        <button id="btn-k-combo" onclick="showSection('k-combo')">K-Compuestos</button>
-        <button id="btn-k-extra" onclick="showSection('k-extra')">K-Extras</button>
-    </div>
+    <!-----------------------------------LeftSide-------------------------------------------->
 
-    <!-- SECCIONES -->
-    <div id="h-basic" class="section-container">
-        <h2>Hiragana Básico</h2>
-        <div id="grid-h-basic" class="grid-wrapper"></div>
-    </div>
+        <a href="kanaStudy.html" class="menu-btn">
+            <img src="src/miku.png" alt="Inicio">
+        </a>
 
-    <div id="h-combo" class="section-container hidden">
-        <h2>Hiragana Compuesto</h2>
-        <div id="grid-h-combo" class="grid-wrapper"></div>
-    </div>
+    
+    <!-----------------------------------HeaderMain--------------------------------------------->
 
-    <div id="k-basic" class="section-container hidden">
-        <h2>Katakana Básico</h2>
-        <div id="grid-k-basic" class="grid-wrapper"></div>
-    </div>
+        <h1><span class="title">Kanario.com</span></h1>
 
-    <div id="k-combo" class="section-container hidden">
-        <h2>Katakana Compuesto</h2>
-        <div id="grid-k-combo" class="grid-wrapper"></div>
-    </div>
+            <select id="languageSelect" onchange="setLanguage(this.value)">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="ja">日本語 (Nihongo)</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+            </select>
 
-    <div id="k-extra" class="section-container hidden">
-        <h2>Katakana Extras</h2>
-        <div id="grid-k-extra" class="grid-wrapper"></div>
-    </div>
+    <!--------------------------------------SettingsBar----------------------------------------->
 
-<script>
-   const data = {
-    hBasic: [
-        {c:"#f87171", s:[["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"]]}, // Vocales
-        {c:"#fb923c", s:[["か","ka"],["き","ki"],["く","ku"],["け","ke"],["こ","ko"]]}, // K
-        {c:"#fb923c", s:[["が","ga"],["ぎ","gi"],["ぐ","gu"],["げ","ge"],["ご","go"]]}, // G (Dakuten)
-        {c:"#fbbf24", s:[["さ","sa"],["し","shi"],["す","su"],["せ","se"],["そ","so"]]}, // S
-        {c:"#fbbf24", s:[["ざ","za"],["じ","ji"],["ず","zu"],["ぜ","ze"],["ぞ","zo"]]}, // Z/J
-        {c:"#4ade80", s:[["た","ta"],["ち","chi"],["つ","tsu"],["て","te"],["と","to"]]}, // T
-        {c:"#4ade80", s:[["だ","da"],["ぢ","ji"],["づ","zu"],["で","de"],["ど","do"]]}, // D
-        {c:"#2dd4bf", s:[["な","na"],["に","ni"],["ぬ","nu"],["ね","ne"],["の","no"]]}, // N
-        {c:"#38bdf8", s:[["は","ha"],["ひ","hi"],["ふ","fu"],["へ","he"],["ほ","ho"]]}, // H
-        {c:"#38bdf8", s:[["ば","ba"],["び","bi"],["ぶ","bu"],["べ","be"],["ぼ","bo"]]}, // B (Dakuten)
-        {c:"#38bdf8", s:[["ぱ","pa"],["ぴ","pi"],["ぷ","pu"],["ぺ","pe"],["ぽ","po"]]}, // P (Handakuten)
-        {c:"#818cf8", s:[["ま","ma"],["み","mi"],["む","mu"],["め","me"],["も","mo"]]}, // M
-        {c:"#a78bfa", s:[["や","ya"],[null,null],["ゆ","yu"],[null,null],["よ","yo"]]}, // Y
-        {c:"#fb7185", s:[["ら","ra"],["り","ri"],["る","ru"],["れ","re"],["ろ","ro"]]}, // R
-        {c:"#94a3b8", s:[["わ","wa"],[null,null],[null,null],[null,null],["を","wo"]]}, // W
-        {c:"#64748b", s:[["ん","n"],[null,null],[null,null],[null,null],[null,null]]}  // N final
-    ],
-    hCombo: [
-        {c:"#38bdf8", s:[["きゃ","kya"],["きゅ","kyu"],["きょ","kyo"],[null,null],[null,null]]},
-        {c:"#38bdf8", s:[["ぎゃ","gya"],["ぎゅ","gyu"],["ぎょ","gyo"],[null,null],[null,null]]},
-        {c:"#38bdf8", s:[["しゃ","sha"],["しゅ","shu"],["しょ","sho"],[null,null],[null,null]]},
-        {c:"#38bdf8", s:[["じゃ","ja"],["じゅ","ju"],["じょ","jo"],[null,null],[null,null]]},
-        {c:"#38bdf8", s:[["ちゃ","cha"],["ちゅ","chu"],["ちょ","cho"],[null,null],[null,null]]},
-        {c:"#38bdf8", s:[["にゃ","nya"],["にゅ","nyu"],["にょ","nyo"],[null,null],[null,null]]},
-        {c:"#38bdf8", s:[["ひゃ","hya"],["ひゅ","hyu"],["ひょ","hyo"],[null,null],[null,null]]},
-        {c:"#38bdf8", s:[["びゃ","bya"],["びゅ","byu"],["びょ","byo"],[null,null],[null,null]]},
-        {c:"#38bdf8", s:[["ぴゃ","pya"],["ぴゅ","pyu"],["ぴょ","pyo"],[null,null],[null,null]]},
-        {c:"#38bdf8", s:[["みゃ","mya"],["ミゅ","myu"],["みょ","myo"],[null,null],[null,null]]},
-        {c:"#38bdf8", s:[["りゃ","rya"],["りゅ","ryu"],["りょ","ryo"],[null,null],[null,null]]}
-    ],
-    kBasic: [
-        {c:"#f87171", s:[["ア","a"],["イ","i"],["ウ","u"],["エ","e"],["オ","o"]]},
-        {c:"#fb923c", s:[["カ","ka"],["キ","ki"],["ク","ku"],["ケ","ke"],["コ","ko"]]},
-        {c:"#fb923c", s:[["ガ","ga"],["ギ","gi"],["グ","gu"],["ゲ","ge"],["ゴ","go"]]},
-        {c:"#fbbf24", s:[["サ","sa"],["シ","shi"],["ス","su"],["セ","se"],["ソ","so"]]},
-        {c:"#fbbf24", s:[["ザ","za"],["ジ","ji"],["ズ","zu"],["ゼ","ze"],["ゾ","zo"]]},
-        {c:"#4ade80", s:[["タ","ta"],["チ","chi"],["ツ","tsu"],["テ","te"],["ト","to"]]},
-        {c:"#4ade80", s:[["ダ","da"],["ヂ","ji"],["ヅ","zu"],["デ","de"],["ド","do"]]},
-        {c:"#2dd4bf", s:[["ナ","na"],["ニ","ni"],["ヌ","nu"],["ネ","ne"],["ノ","no"]]},
-        {c:"#38bdf8", s:[["ハ","ha"],["ヒ","hi"],["フ","fu"],["ヘ","he"],["ホ","ho"]]},
-        {c:"#38bdf8", s:[["バ","ba"],["ビ","bi"],["ブ","bu"],["ベ","be"],["ボ","bo"]]},
-        {c:"#38bdf8", s:[["パ","pa"],["ピ","pi"],["プ","pu"],["ペ","pe"],["ポ","po"]]},
-        {c:"#818cf8", s:[["マ","ma"],["ミ","mi"],["ム","mu"],["メ","me"],["モ","mo"]]},
-        {c:"#a78bfa", s:[["ヤ","ya"],[null,null],["ユ","yu"],[null,null],["ヨ","yo"]]},
-        {c:"#fb7185", s:[["ラ","ra"],["リ","ri"],["ル","ru"],["レ","re"],["ロ","ro"]]},
-        {c:"#94a3b8", s:[["ワ","wa"],[null,null],[null,null],[null,null],["ヲ","wo"]]},
-        {c:"#64748b", s:[["ン","n"],[null,null],[null,null],[null,null],[null,null]]}
-    ],
-    kCombo: [
-        {c:"#fb7185", s:[["キャ","kya"],["キュ","kyu"],["キョ","kyo"],[null,null],[null,null]]},
-        {c:"#fb7185", s:[["ギャ","gya"],["ギュ","gyu"],["ギョ","gyo"],[null,null],[null,null]]},
-        {c:"#fb7185", s:[["シャ","sha"],["シュ","shu"],["ショ","sho"],[null,null],[null,null]]},
-        {c:"#fb7185", s:[["ジャ","ja"],["ジュ","ju"],["ジョ","jo"],[null,null],[null,null]]},
-        {c:"#fb7185", s:[["チャ","cha"],["チュ","chu"],["チョ","cho"],[null,null],[null,null]]},
-        {c:"#fb7185", s:[["ニャ","nya"],["ニュ","nyu"],["ニョ","nyo"],[null,null],[null,null]]},
-        {c:"#fb7185", s:[["ヒャ","hya"],["ヒュ","hyu"],["ヒョ","hyo"],[null,null],[null,null]]},
-        {c:"#fb7185", s:[["ビャ","bya"],["ビュ","byu"],["ビョ","byo"],[null,null],[null,null]]},
-        {c:"#fb7185", s:[["ピャ","pya"],["ピュ","pyu"],["ピョ","pyo"],[null,null],[null,null]]},
-        {c:"#fb7185", s:[["ミャ","mya"],["ミュ","myu"],["ミョ","myo"],[null,null],[null,null]]},
-        {c:"#fb7185", s:[["リゃ","rya"],["リュ","ryu"],["リョ","ryo"],[null,null],[null,null]]}
-    ],
-    kExtra: [
-        {c:"#f472b6", s:[["ファ","fa"],["フィ","fi"],["フェ","fe"],["フォ","fo"],[null,null]]},
-        {c:"#f472b6", s:[["ウィ","wi"],["ウェ","we"],["ウォ","wo"],[null,null],[null,null]]},
-        {c:"#f472b6", s:[["ヴァ","va"],["ヴィ","vi"],["ヴ","vu"],["ヴェ","ve"],["ヴォ","vo"]]},
-        {c:"#f472b6", s:[["シェ","she"],["ジェ","je"],["チェ","che"],[null,null],[null,null]]},
-        {c:"#f472b6", s:[["ティ","ti"],["トゥ","tu"],["テュ","tyu"],[null,null],[null,null]]},
-        {c:"#f472b6", s:[["ディ","di"],["ドゥ","du"],["デュ","dyu"],[null,null],[null,null]]},
-        {c:"#f472b6", s:[["ツァ","tsa"],["ツィ","tsi"],["ツェ","tse"],["ツォ","tso"],[null,null]]}
-    ]
-};
+        <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
+        <div class="settings-panel" id="settingsPanel">
+            
+        <h3>Themes</h3>
 
-    function render(id, list) {
-        const container = document.getElementById(id);
-        list.forEach(group => {
-            const row = document.createElement("div");
-            row.className = "group-row";
-            row.style.borderLeftColor = group.c;
-            group.s.forEach(item => {
-                const card = document.createElement("div");
-                if (!item[0]) card.className = "card empty";
-                else {
-                    card.className = "card";
-                    card.innerHTML = `<span class="char">${item[0]}</span><span class="romaji">${item[1]}</span>`;
-                }
-                row.appendChild(card);
+            <button onclick="setTheme('light')">Light</button>
+            <button onclick="setTheme('dark')">Dark</button>
+            <button onclick="setTheme('thematic')">Thematic</button>
+
+
+        </div>
+    </header>
+    <!--========================================================================================-->
+
+
+    <main> <body>
+        <div class="menu">
+            <button id="btn-h-basic" class="active" onclick="showSection('h-basic')">Hiragana</button>
+            <button id="btn-h-combo" onclick="showSection('h-combo')">H-Compuestos</button>
+            <button id="btn-k-basic" onclick="showSection('k-basic')">Katakana</button>
+            <button id="btn-k-combo" onclick="showSection('k-combo')">K-Compuestos</button>
+            <button id="btn-k-extra" onclick="showSection('k-extra')">K-Extras</button>
+        </div>
+
+        <div id="h-basic" class="section-container"><h2>Hiragana Básico</h2><div id="grid-h-basic" class="grid-wrapper"></div></div>
+        <div id="h-combo" class="section-container hidden"><h2>Hiragana Compuesto</h2><div id="grid-h-combo" class="grid-wrapper"></div></div>
+        <div id="k-basic" class="section-container hidden"><h2>Katakana Básico</h2><div id="grid-k-basic" class="grid-wrapper"></div></div>
+        <div id="k-combo" class="section-container hidden"><h2>Katakana Compuesto</h2><div id="grid-k-combo" class="grid-wrapper"></div></div>
+        <div id="k-extra" class="section-container hidden"><h2>Katakana Extras</h2><div id="grid-k-extra" class="grid-wrapper"></div></div>
+    </main>
+<!--========================================================================================-->
+<!--      ██████╗  █████╗  ██╗   ██╗  █████╗                                                -->
+<!--      ╚═══██║ ██╔══██╗ ██║   ██║ ██╔══██╗                                               -->
+<!--          ██║ ███████║ ██║   ██║ ███████║                                               -->
+<!--      ██  ██║ ██╔══██║ ╚██╗ ██╔╝ ██╔══██║                                               -->
+<!--      █████╔╝ ██║  ██║  ╚████╔╝  ██║  ██║                                               -->
+<!--       ╚════╝  ╚═╝  ╚═╝   ╚═══╝   ╚═╝  ╚═╝                                              -->
+<!--========================================================================================-->
+
+    <script>
+        // === 1. BASE DE DATOS DE CARACTERES ===
+        const data = {
+            hBasic: [
+                {c:"#f87171", s:[["あ","a"],["い","i"],["う","u"],["え","e"],["お","o"]]}, 
+                {c:"#fb923c", s:[["か","ka"],["き","ki"],["く","ku"],["け","ke"],["こ","ko"]]},
+                {c:"#fb923c", s:[["が","ga"],["ぎ","gi"],["ぐ","gu"],["げ","ge"],["ご","go"]]},
+                {c:"#fbbf24", s:[["さ","sa"],["し","shi"],["す","su"],["せ","se"],["そ","so"]]},
+                {c:"#fbbf24", s:[["ざ","za"],["じ","ji"],["ず","zu"],["ぜ","ze"],["ぞ","zo"]]},
+                {c:"#4ade80", s:[["た","ta"],["ち","chi"],["つ","tsu"],["て","te"],["と","to"]]},
+                {c:"#4ade80", s:[["だ","da"],["ぢ","ji"],["づ","zu"],["で","de"],["ど","do"]]},
+                {c:"#2dd4bf", s:[["な","na"],["に","ni"],["ぬ","nu"],["ね","ne"],["の","no"]]},
+                {c:"#38bdf8", s:[["は","ha"],["ひ","hi"],["ふ","fu"],["へ","he"],["ほ","ho"]]},
+                {c:"#38bdf8", s:[["ば","ba"],["び","bi"],["ぶ","bu"],["べ","be"],["ぼ","bo"]]},
+                {c:"#38bdf8", s:[["ぱ","pa"],["ぴ","pi"],["ぷ","pu"],["ぺ","pe"],["ぽ","po"]]},
+                {c:"#818cf8", s:[["ま","ma"],["み","mi"],["む","mu"],["め","me"],["も","mo"]]},
+                {c:"#a78bfa", s:[["や","ya"],[null,null],["ゆ","yu"],[null,null],["よ","yo"]]},
+                {c:"#fb7185", s:[["ら","ra"],["り","ri"],["る","ru"],["れ","re"],["ろ","ro"]]},
+                {c:"#94a3b8", s:[["わ","wa"],[null,null],[null,null],[null,null],["を","wo"]]},
+                {c:"#64748b", s:[["ん","n"],[null,null],[null,null],[null,null],[null,null]]} 
+            ],
+            hCombo: [
+                {c:"#38bdf8", s:[["きゃ","kya"],["きゅ","kyu"],["きょ","kyo"],[null,null],[null,null]]},
+                {c:"#38bdf8", s:[["ぎゃ","gya"],["ぎゅ","gyu"],["ぎょ","gyo"],[null,null],[null,null]]},
+                {c:"#38bdf8", s:[["しゃ","sha"],["しゅ","shu"],["しょ","sho"],[null,null],[null,null]]},
+                {c:"#38bdf8", s:[["じゃ","ja"],["じゅ","ju"],["じょ","jo"],[null,null],[null,null]]},
+                {c:"#38bdf8", s:[["ちゃ","cha"],["ちゅ","chu"],["ちょ","cho"],[null,null],[null,null]]},
+                {c:"#38bdf8", s:[["にゃ","nya"],["にゅ","nyu"],["にょ","nyo"],[null,null],[null,null]]},
+                {c:"#38bdf8", s:[["ひゃ","hya"],["ひゅ","hyu"],["ひょ","hyo"],[null,null],[null,null]]},
+                {c:"#38bdf8", s:[["びゃ","bya"],["びゅ","byu"],["びょ","byo"],[null,null],[null,null]]},
+                {c:"#38bdf8", s:[["ぴゃ","pya"],["ぴゅ","pyu"],["ぴょ","pyo"],[null,null],[null,null]]},
+                {c:"#38bdf8", s:[["みゃ","mya"],["みゅ","myu"],["みょ","myo"],[null,null],[null,null]]},
+                {c:"#38bdf8", s:[["りゃ","rya"],["りゅ","ryu"],["りょ","ryo"],[null,null],[null,null]]}
+            ],
+            kBasic: [
+                {c:"#f87171", s:[["ア","a"],["イ","i"],["ウ","u"],["エ","e"],["オ","o"]]},
+                {c:"#fb923c", s:[["カ","ka"],["キ","ki"],["ク","ku"],["ケ","ke"],["コ","ko"]]},
+                {c:"#fb923c", s:[["ガ","ga"],["ギ","gi"],["グ","gu"],["ゲ","ge"],["ゴ","go"]]},
+                {c:"#fbbf24", s:[["サ","sa"],["シ","shi"],["ス","su"],["セ","se"],["ソ","so"]]},
+                {c:"#fbbf24", s:[["ザ","za"],["ジ","ji"],["ズ","zu"],["ゼ","ze"],["ゾ","zo"]]},
+                {c:"#4ade80", s:[["タ","ta"],["チ","chi"],["ツ","tsu"],["テ","te"],["ト","to"]]},
+                {c:"#4ade80", s:[["ダ","da"],["ヂ","ji"],["ヅ","zu"],["デ","de"],["ド","do"]]},
+                {c:"#2dd4bf", s:[["ナ","na"],["ニ","ni"],["ヌ","nu"],["ネ","ne"],["ノ","no"]]},
+                {c:"#38bdf8", s:[["ハ","ha"],["ヒ","hi"],["フ","fu"],["ヘ","he"],["ホ","ho"]]},
+                {c:"#38bdf8", s:[["バ","ba"],["ビ","bi"],["ブ","bu"],["ベ","be"],["ボ","bo"]]},
+                {c:"#38bdf8", s:[["パ","pa"],["ピ","pi"],["プ","pu"],["ペ","pe"],["ポ","po"]]},
+                {c:"#818cf8", s:[["マ","ma"],["ミ","mi"],["ム","mu"],["メ","me"],["モ","mo"]]},
+                {c:"#a78bfa", s:[["ヤ","ya"],[null,null],["ユ","yu"],[null,null],["ヨ","yo"]]},
+                {c:"#fb7185", s:[["ラ","ra"],["リ","ri"],["ル","ru"],["レ","re"],["ロ","ro"]]},
+                {c:"#94a3b8", s:[["ワ","wa"],[null,null],[null,null],[null,null],["ヲ","wo"]]},
+                {c:"#64748b", s:[["ン","n"],[null,null],[null,null],[null,null],[null,null]]}
+            ],
+            kCombo: [
+                {c:"#fb7185", s:[["キャ","kya"],["キュ","kyu"],["キョ","kyo"],[null,null],[null,null]]},
+                {c:"#fb7185", s:[["ギャ","gya"],["ギュ","gyu"],["ギョ","gyo"],[null,null],[null,null]]},
+                {c:"#fb7185", s:[["シャ","sha"],["シュ","shu"],["ショ","sho"],[null,null],[null,null]]},
+                {c:"#fb7185", s:[["ジャ","ja"],["ジュ","ju"],["ジョ","jo"],[null,null],[null,null]]},
+                {c:"#fb7185", s:[["チャ","cha"],["チュ","chu"],["チョ","cho"],[null,null],[null,null]]},
+                {c:"#fb7185", s:[["ニャ","nya"],["ニュ","nyu"],["ニョ","nyo"],[null,null],[null,null]]},
+                {c:"#fb7185", s:[["ヒャ","hya"],["ヒュ","hyu"],["ヒョ","hyo"],[null,null],[null,null]]},
+                {c:"#fb7185", s:[["ビャ","bya"],["ビュ","byu"],["ビョ","byo"],[null,null],[null,null]]},
+                {c:"#fb7185", s:[["ピャ","pya"],["ピュ","pyu"],["ピョ","pyo"],[null,null],[null,null]]},
+                {c:"#fb7185", s:[["ミャ","mya"],["ミュ","myu"],["ミョ","myo"],[null,null],[null,null]]},
+                {c:"#fb7185", s:[["リャ","rya"],["リュ","ryu"],["リョ","ryo"],[null,null],[null,null]]}
+            ],
+            kExtra: [
+                {c:"#f472b6", s:[["ファ","fa"],["フィ","fi"],["フェ","fe"],["フォ","fo"],[null,null]]},
+                {c:"#f472b6", s:[["ウィ","wi"],["ウェ","we"],["ウォ","wo"],[null,null],[null,null]]},
+                {c:"#f472b6", s:[["ヴァ","va"],["ヴィ","vi"],["ヴ","vu"],["ヴェ","ve"],["ヴォ","vo"]]},
+                {c:"#f472b6", s:[["シェ","she"],["ジェ","je"],["チェ","che"],[null,null],[null,null]]},
+                {c:"#f472b6", s:[["ティ","ti"],["トゥ","tu"],["テュ","tyu"],[null,null],[null,null]]},
+                {c:"#f472b6", s:[["ディ","di"],["ドゥ","du"],["デュ","dyu"],[null,null],[null,null]]},
+                {c:"#f472b6", s:[["ツァ","tsa"],["ツィ","tsi"],["ツェ","tse"],["ツォ","tso"],[null,null]]}
+            ]
+        };
+
+        // === 2. FUNCIONES DE RENDERIZADO ===
+        function render(id, list) {
+            const container = document.getElementById(id);
+            list.forEach(group => {
+                const row = document.createElement("div");
+                row.className = "group-row";
+                row.style.borderLeftColor = group.c;
+                group.s.forEach(item => {
+                    const card = document.createElement("div");
+                    if (!item[0]) {
+                        card.className = "card empty";
+                    } else {
+                        card.className = "card";
+                        card.innerHTML = `<span class="char">${item[0]}</span><span class="romaji">${item[1]}</span>`;
+                    }
+                    row.appendChild(card);
+                });
+                container.appendChild(row);
             });
-            container.appendChild(row);
+        }
+
+        function showSection(id) {
+            document.querySelectorAll('.section-container').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.menu button').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById('btn-' + id).classList.add('active');
+        }
+
+        // Renderizado inicial
+        render("grid-h-basic", data.hBasic);
+        render("grid-h-combo", data.hCombo);
+        render("grid-k-basic", data.kBasic);
+        render("grid-k-combo", data.kCombo);
+        render("grid-k-extra", data.kExtra);
+
+
+        // ===============================\\
+                //SIDEBARS
+        // ===============================\\
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("open");
+        }
+
+        function toggleSettings() {
+            document.getElementById("settingsPanel").classList.toggle("open");
+        }
+
+
+        // ===============================\\
+                    //LOS TEMAS
+         // ===============================\\
+
+        function setTheme(theme) {
+            document.body.className = theme;
+            const header = document.querySelector("header");
+            if (header) {
+                header.className = `header ${theme}`;
+            }
+            
+
+            localStorage.setItem('selectedTheme', theme);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedTheme = localStorage.getItem('selectedTheme');
+
+
+            if (savedTheme) {
+                setTheme(savedTheme);
+            }
         });
-    }
 
-    function showSection(id) {
-        document.querySelectorAll('.section-container').forEach(s => s.classList.add('hidden'));
-        document.querySelectorAll('.menu button').forEach(b => b.classList.remove('active'));
-        document.getElementById(id).classList.remove('hidden');
-        document.getElementById('btn-' + id).classList.add('active');
-    }
+        // ===============================\\
+                //NAVEGACION
+        // ===============================\\
 
-    render("grid-h-basic", data.hBasic);
-    render("grid-h-combo", data.hCombo);
-    render("grid-k-basic", data.kBasic);
-    render("grid-k-combo", data.kCombo);
-    render("grid-k-extra", data.kExtra);
-</script>
+        const items = document.querySelectorAll('.menu-item');
+
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                const texto = item.innerText.toLowerCase();
+
+                if (texto.includes('kana')) {
+                    window.location.href = 'kanastudy.html';
+                } else if (texto.includes('qui')) {
+                    window.location.href = 'WhoIam.html';
+                }   else if (texto.includes('kanji')) {
+                    window.location.href = 'kanjiStudy.html';
+                }
+            });
+        });
+
+    </script>
 </body>
 </html>

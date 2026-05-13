@@ -11,9 +11,28 @@
             top: 0;
             z-index: 1000;
         }
-
         header.light { background-color: #b9b9b9; border-bottom: 3px solid #000; color: #000; }
         header.thematic { background: rgba(255, 255, 255, 0.3); color: #222; border-bottom: 3px solid #393939; }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            white-space: nowrap;
+        }
+
+        #languageSelect {
+            min-width: 60px;
+            width: auto;
+            margin-left: 20px;
+            size: auto;
+            background: #333;
+            color: white;
+            border: 1px solid #666;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+		body.thematic #languageSelect { background: rgba(255, 255, 255, 0.5); color: #000; }
 
 body {
     font-family: 'Segoe UI', "Yu Gothic", sans-serif;
@@ -236,24 +255,17 @@ input#respuesta:focus {
     font-size: 1.2rem;
 }
 
-.menu-btn {
-    position: absolute;
-    left: 20px;    
-    top: 50%;         
-    transform: translateY(-50%); 
-    font-size: 24px;
-    cursor: pointer;
-    z-index: 1000;
-    transition: all 0.3s;
-    border-radius: 10px;
+.menu-btn { 
+    position: absolute; 
+    left: 20px; 
+    z-index: 1100; 
 }
 
-.menu-btn img {
-    width: 50px; 
-    height: 50px;
-    object-fit: cover;
+.menu-btn img { 
+    width: 45px; 
+    height: 45px; 
     border-radius: 50%; 
-    transition: 0.3s;
+    border: 2px solid white; 
 }
 .menu-btn img:hover {
     transform: scale(1.1);

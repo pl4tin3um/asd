@@ -7,37 +7,45 @@
     <link rel="stylesheet" href="kanastudyCS.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<header>
-    <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+
+    <!--========================================================================================-->
+        <header class="header">
+
+    <!-----------------------------------LeftSide-------------------------------------------->
+
         <a href="index.html" class="menu-btn">
-        <img src="src/miku.png" alt="Inicio">
-         </a>
+            <img src="src/miku.png" alt="Inicio">
+        </a>
 
- <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
-    <h1><span class="title">Kana Study</span></h1>
-    <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
-    <div class="settings-panel" id="settingsPanel">
+    
+    <!-----------------------------------HeaderMain--------------------------------------------->
+
+        <h1><span class="title">Kanario.com</span></h1>
+
+            <select id="languageSelect" onchange="setLanguage(this.value)">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="ja">日本語 (Nihongo)</option>
+                <option value="fr">Français</option>
+                <option value="de">Deutsch</option>
+                <option value="it">Italiano</option>
+            </select>
+
+    <!--------------------------------------SettingsBar----------------------------------------->
+
+        <div class="settings-btn" onclick="toggleSettings()">⚙️</div>
+        <div class="settings-panel" id="settingsPanel">
+            
         <h3>Themes</h3>
-        <button onclick="setTheme('light')">Light</button>
-        <button onclick="setTheme('dark')">Dark</button>
-        <button onclick="setTheme('thematic')">Thematic</button>
+
+            <button onclick="setTheme('light')">Light</button>
+            <button onclick="setTheme('dark')">Dark</button>
+            <button onclick="setTheme('thematic')">Thematic</button>
 
 
-
-    <h3>Language</h3>
-
-    <select id="languageSelect" onchange="setLanguage(this.value)">
-        <option value="en">English</option>
-        <option value="ja">にほん</option>
-        <option value="es">Español</option>
-        <option value="fr">Français</option>
-        <option value="de">Deutsch</option>
-        <option value="it">Italiano</option>
-
-    </select>
-    </div>
-    <!--aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa-->
+        </div>
     </header>
+    <!--========================================================================================-->
 
     
 <main>
