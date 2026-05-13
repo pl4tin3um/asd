@@ -355,7 +355,7 @@
                 {c:"#f472b6", s:[["ツァ","tsa"],["ツィ","tsi"],["ツェ","tse"],["ツォ","tso"],[null,null]]}
             ]
         };
-
+        //========================================================================================-->
         // === 2. FUNCIONES DE RENDERIZADO ===
         function render(id, list) {
             const container = document.getElementById(id);
@@ -376,6 +376,8 @@
                 container.appendChild(row);
             });
         }
+        //========================================================================================-->
+        // === 3. FUNCIONES DE INTERACCIÓN Y NAVEGACIÓN ===
 
         function showSection(id) {
             document.querySelectorAll('.section-container').forEach(s => s.classList.add('hidden'));
@@ -384,13 +386,18 @@
             document.getElementById(id).classList.remove('hidden');
             document.getElementById('btn-' + id).classList.add('active');
         }
-
+        //  ========================================================================================-->
         // Renderizado inicial
         render("grid-h-basic", data.hBasic);
         render("grid-h-combo", data.hCombo);
         render("grid-k-basic", data.kBasic);
         render("grid-k-combo", data.kCombo);
         render("grid-k-extra", data.kExtra);
+
+        //========================================================================
+        //                                                                       |
+        //                                                                       |
+        //========================================================================
 
 
         // ===============================\\

@@ -55,175 +55,217 @@ const DATA = {
     }
 };
 
-let tipoActual = 'h'; 
-let poolActual = {};
-let keysActuales = []; 
-let indiceBucle = 0;   
-let charActual = "";
-let racha = 0;
+//========================================================================
+// --- VARIABLES GLOBALES ---
 
-let modoBase = 'h'; 
+        let tipoActual = 'h'; 
+        let poolActual = {};
+        let keysActuales = []; 
+        let indiceBucle = 0;   
+        let charActual = "";
+        let racha = 0;
 
-function setTipo(modo) {
-    // Quitar active de botones
-    document.querySelectorAll('.selector-tipo button').forEach(b => b.classList.remove('active'));
-    document.getElementById(`btn-${modo}`).classList.add('active');
+        let modoBase = 'h'; 
+//========================================================================
+// --- FUNCIONES DE SELECCION ---
 
-    // Ocultar todas las secciones primero
-    document.querySelectorAll('.script-section').forEach(s => s.classList.add('hidden'));
+        function setTipo(modo) {
+            // Quitar active de botones
+            document.querySelectorAll('.selector-tipo button').forEach(b => b.classList.remove('active'));
+            document.getElementById(`btn-${modo}`).classList.add('active');
 
-    // Mostrar según el botón presionado
-    if (modo === 'h') document.getElementById('section-h').classList.remove('hidden');
-    if (modo === 'k') document.getElementById('section-k').classList.remove('hidden');
-    // ... etc
-}
+            // Ocultar todas las secciones primero
+            document.querySelectorAll('.script-section').forEach(s => s.classList.add('hidden'));
 
-function seleccionarTodo(estado) {
-
-    const checkboxes = document.querySelectorAll('.grid-checks label:not(.disabled) input');
-    checkboxes.forEach(cb => cb.checked = estado);
-}
-// Función para navegar suavemente entre secciones dentro del scroll
-function irA(id) {
-    const elemento = document.getElementById(id);
-    elemento.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    
-    // Opcional: Marcar botón como activo
-    document.querySelectorAll('.selector-tipo button').forEach(btn => {
-        btn.classList.toggle('active', btn.innerText.toLowerCase().includes(id.split('-')[1]));
-    });
-}
-
-function iniciarSesion() {
-    // 1. Capturar TODOS los marcados
-    const seleccionados = document.querySelectorAll('.grid-checks input:checked');
-    
-    if (seleccionados.length === 0) return alert("Selecciona al menos un grupo para estudiar");
-
-    poolActual = {}; // Limpiamos el pool anterior
-
-    // 2. Construir el pool mixto
-    seleccionados.forEach(cb => {
-        const script = cb.dataset.script; // 'h' o 'k'
-        const grupo = cb.value;          // 'Vocal', 'C1', 'E1', etc.
-
-        if (DATA[script] && DATA[script][grupo]) {
-            // Combinamos los objetos de DATA en el poolActual
-            poolActual = { ...poolActual, ...DATA[script][grupo] };
+            // Mostrar según el botón presionado
+            if (modo === 'h') document.getElementById('section-h').classList.remove('hidden');
+            if (modo === 'k') document.getElementById('section-k').classList.remove('hidden');
+            // ... etc
         }
-    });
 
-    // 3. Preparar el juego
-    keysActuales = mezclarArray(Object.keys(poolActual));
-    indiceBucle = 0;
-    racha = 0;
+        function seleccionarTodo(estado) {
 
-    document.getElementById('menu').classList.add('hidden');
-    document.getElementById('juego').classList.remove('hidden');
-    actualizarScore();
-    nuevaPregunta();
-}
+            const checkboxes = document.querySelectorAll('.grid-checks label:not(.disabled) input');
+            checkboxes.forEach(cb => cb.checked = estado);
+        }
+//========================================================================
+// --- FUNCIONES DE NAVEGACIÓN ---
+        function irA(id) {
+            const elemento = document.getElementById(id);
+            elemento.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            // Opcional: Marcar botón como activo
+            document.querySelectorAll('.selector-tipo button').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText.toLowerCase().includes(id.split('-')[1]));
+            });
+        }
+//========================================================================
+// --- FUNCIONES DE INICIALIZACIÓN ---
+        function iniciarSesion() {
+            // 1. Capturar TODOS los marcados
+            const seleccionados = document.querySelectorAll('.grid-checks input:checked');
+            
+            if (seleccionados.length === 0) return alert("Selecciona al menos un grupo para estudiar");
 
-function nuevaPregunta() {
+            poolActual = {}; // Limpiamos el pool anterior
 
-    if (indiceBucle >= keysActuales.length) {
-        mezclarArray(keysActuales);
-        indiceBucle = 0;
-        console.log("¡Lista completada! Mezclando de nuevo...");
-    }
+            // 2. Construir el pool mixto
+            seleccionados.forEach(cb => {
+                const script = cb.dataset.script; // 'h' o 'k'
+                const grupo = cb.value;          // 'Vocal', 'C1', 'E1', etc.
 
-    charActual = keysActuales[indiceBucle];
-    
-    document.getElementById('feedback').innerText = ""; 
-    const input = document.getElementById('respuesta');
-    input.value = "";
-    document.getElementById('caracter-visual').innerText = charActual;
-    input.focus();
-}
+                if (DATA[script] && DATA[script][grupo]) {
+                    // Combinamos los objetos de DATA en el poolActual
+                    poolActual = { ...poolActual, ...DATA[script][grupo] };
+                }
+            });
 
-function verificar() {
-    const input = document.getElementById('respuesta');
-    const res = input.value.trim().toLowerCase();
-    const fb = document.getElementById('feedback');
-    
-    if (res === "") return;
+            // 3. Preparar el juego
+            keysActuales = mezclarArray(Object.keys(poolActual));
+            indiceBucle = 0;
+            racha = 0;
 
-    if (res === poolActual[charActual]) {
-        racha++;
-        indiceBucle++; 
-        actualizarScore();
-        nuevaPregunta();
-    } else {
-        racha = 0;
-        fb.innerText = `❌ Era: ${poolActual[charActual]}`;
-        fb.style.color = "#ef4444";
-        actualizarScore();
-        
-        input.value = "";
-        setTimeout(() => {
-            indiceBucle++;
+            document.getElementById('menu').classList.add('hidden');
+            document.getElementById('juego').classList.remove('hidden');
+            actualizarScore();
             nuevaPregunta();
-        }, 700);
-    }
-}
+        }
+    //========================================================================
+    // --- FUNCIONES DE BUCLES ---
+        function nuevaPregunta() {
+
+            if (indiceBucle >= keysActuales.length) {
+                mezclarArray(keysActuales);
+                indiceBucle = 0;
+                console.log("¡Lista completada! Mezclando de nuevo...");
+            }
+
+            charActual = keysActuales[indiceBucle];
+            
+            document.getElementById('feedback').innerText = ""; 
+            const input = document.getElementById('respuesta');
+            input.value = "";
+            document.getElementById('caracter-visual').innerText = charActual;
+            input.focus();
+        }
+    //========================================================================
+    // --- FUNCIONES DE VERIFICACIÓN ---
+
+        function verificar() {
+            const input = document.getElementById('respuesta');
+            const res = input.value.trim().toLowerCase();
+            const fb = document.getElementById('feedback');
+            
+            if (res === "") return;
+
+            if (res === poolActual[charActual]) {
+                racha++;
+                indiceBucle++; 
+                actualizarScore();
+                nuevaPregunta();
+            } else {
+                racha = 0;
+                fb.innerText = `❌ Era: ${poolActual[charActual]}`;
+                fb.style.color = "#ef4444";
+                actualizarScore();
+                
+                input.value = "";
+                setTimeout(() => {
+                    indiceBucle++;
+                    nuevaPregunta();
+                }, 700);
+            }
+        }
 
 
+    //========================================================================
+    // --- FUNCIONES DE ENTRAR VERIFICACIÓN ---
+        function volver() {
+            document.getElementById('menu').classList.remove('hidden');
+            document.getElementById('juego').classList.add('hidden');
+            document.getElementById('feedback').innerText = "";
+        }
 
-function volver() {
-    document.getElementById('menu').classList.remove('hidden');
-    document.getElementById('juego').classList.add('hidden');
-    document.getElementById('feedback').innerText = "";
-}
+        document.getElementById('respuesta').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') verificar();
+        });
 
-document.getElementById('respuesta').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') verificar();
-});
+        function mezclarArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
-function mezclarArray(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
+        function actualizarScore() {
+            const scoreEl = document.getElementById('score');
+            if (scoreEl) {
+                scoreEl.innerText = `Racha actual🔥: ${racha}`;
+            }
+        }
+    //========================================================================
+    //                                                                       |
+    //                                                                       |
+    //========================================================================
 
-function actualizarScore() {
-    const scoreEl = document.getElementById('score');
-    if (scoreEl) {
-        scoreEl.innerText = `Racha actual🔥: ${racha}`;
-    }
-}
-
-
-
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    const savedTheme = localStorage.getItem('selectedTheme');
-
-    // Si existe un tema guardado, lo aplicamos
-    if (savedTheme) {
-        setTheme(savedTheme);
-    }
-});
-
-
-
-
-function toggleSettings() {
-    document.getElementById("settingsPanel").classList.toggle("open");
-}
-//======================================
-
-//los temas paaaaa
-function setTheme(theme) {
-    document.body.className = theme;
-    const header = document.querySelector("header");
-    header.className = `header ${theme}`;
     
-}
-//======================================
+        // ===============================\\
+                //SIDEBARS
+        // ===============================\\
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            sidebar.classList.toggle("open");
+        }
+
+        function toggleSettings() {
+            document.getElementById("settingsPanel").classList.toggle("open");
+        }
+
+
+        // ===============================\\
+                    //LOS TEMAS
+         // ===============================\\
+
+        function setTheme(theme) {
+            document.body.className = theme;
+            const header = document.querySelector("header");
+            if (header) {
+                header.className = `header ${theme}`;
+            }
+            
+
+            localStorage.setItem('selectedTheme', theme);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const savedTheme = localStorage.getItem('selectedTheme');
+
+
+            if (savedTheme) {
+                setTheme(savedTheme);
+            }
+        });
+
+        // ===============================\\
+                //NAVEGACION
+        // ===============================\\
+
+        const items = document.querySelectorAll('.menu-item');
+
+        items.forEach(item => {
+            item.addEventListener('click', () => {
+                const texto = item.innerText.toLowerCase();
+
+                if (texto.includes('kana')) {
+                    window.location.href = 'kanastudy.html';
+                } else if (texto.includes('qui')) {
+                    window.location.href = 'WhoIam.html';
+                }   else if (texto.includes('kanji')) {
+                    window.location.href = 'kanjiStudy.html';
+                }
+            });
+        });
 
 
 

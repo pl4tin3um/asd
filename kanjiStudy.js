@@ -76,148 +76,160 @@ const kanjiDatabase = {
 
     ]
 };
+        //========================================================================
+        // --- VARIABLES GLOBALES ---
 
-let selectedGroups = new Set();
-let currentTab = "Numeros";
-let studyQueue = [];
-let currentItemIndex = 0;
-let currentLaps = 0;
+        let selectedGroups = new Set();
+        let currentTab = "Numeros";
+        let studyQueue = [];
+        let currentItemIndex = 0;
+        let currentLaps = 0;
 
-function init() {
-    renderTabs();
-    renderGroups();
-}
-
-function renderTabs() {
-    const container = document.getElementById('category-tabs');
-    container.innerHTML = "";
-    Object.keys(kanjiDatabase).forEach(cat => {
-        const btn = document.createElement('button');
-        btn.className = `tab-btn ${cat === currentTab ? 'active' : ''}`;
-        btn.innerText = cat;
-        btn.onclick = () => {
-            currentTab = cat;
+        function init() {
             renderTabs();
             renderGroups();
-        };
-        container.appendChild(btn);
-    });
-}
+        }
 
-function renderGroups() {
-    const container = document.getElementById('groups-container');
-    container.innerHTML = "";
-    
-    const groups = kanjiDatabase[currentTab];
-    groups.forEach(group => {
-        const card = document.createElement('div');
-        const isSelected = selectedGroups.has(group.title);
-        card.className = `group-card ${isSelected ? 'selected' : ''}`;
-        
-        card.innerHTML = `
-            <span class="group-title">${group.title}</span>
-            <div class="kanji-mini-grid">
-                ${group.items.map(k => `
-                    <div class="mini-char">
-                        <b>${k.kanji}</b>
-                        <span>${k.kana}</span> 
+
+        //========================================================================
+        // --- RENDERIZADO DE PESTAÑAS Y GRUPOS ---
+        function renderTabs() {
+            const container = document.getElementById('category-tabs');
+            container.innerHTML = "";
+            Object.keys(kanjiDatabase).forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = `tab-btn ${cat === currentTab ? 'active' : ''}`;
+                btn.innerText = cat;
+                btn.onclick = () => {
+                    currentTab = cat;
+                    renderTabs();
+                    renderGroups();
+                };
+                container.appendChild(btn);
+            });
+        }
+        //========================================================================
+        // --- RENDERIZADO DE GRUPOS ---
+        function renderGroups() {
+            const container = document.getElementById('groups-container');
+            container.innerHTML = "";
+            
+            const groups = kanjiDatabase[currentTab];
+            groups.forEach(group => {
+                const card = document.createElement('div');
+                const isSelected = selectedGroups.has(group.title);
+                card.className = `group-card ${isSelected ? 'selected' : ''}`;
+                
+                card.innerHTML = `
+                    <span class="group-title">${group.title}</span>
+                    <div class="kanji-mini-grid">
+                        ${group.items.map(k => `
+                            <div class="mini-char">
+                                <b>${k.kanji}</b>
+                                <span>${k.kana}</span> 
+                            </div>
+                        `).join('')}
                     </div>
-                `).join('')}
-            </div>
-        `;
-        
-        card.onclick = () => toggleGroup(group.title, card);
-        container.appendChild(card);
-    });
-}
-
-function toggleGroup(title, element) {
-    if (selectedGroups.has(title)) {
-        selectedGroups.delete(title);
-        element.classList.remove('selected');
-    } else {
-        selectedGroups.add(title);
-        element.classList.add('selected');
-    }
-    updateCount();
-}
-
-function selectAll(bool) {
-    const groupsInTab = kanjiDatabase[currentTab];
-    groupsInTab.forEach(g => {
-        if (bool) selectedGroups.add(g.title);
-        else selectedGroups.delete(g.title);
-    });
-    renderGroups();
-    updateCount();
-}
-
-function updateCount() {
-    document.getElementById('count').innerText = selectedGroups.size;
-}
-
-// --- ARREGLO DEL BOTÓN ESTUDIAR ---
-function startStudySession() {
-    if (selectedGroups.size === 0) {
-        alert("¡Selecciona al menos un grupo!");
-        return;
-    }
-
-    // Llenar la cola de estudio con los items de los grupos seleccionados
-    studyQueue = [];
-    Object.values(kanjiDatabase).flat().forEach(group => {
-        if (selectedGroups.has(group.title)) {
-            studyQueue.push(...group.items);
+                `;
+                
+                card.onclick = () => toggleGroup(group.title, card);
+                container.appendChild(card);
+            });
         }
-    });
+        //========================================================================
+        // --- FUNCIONES DE SELECCIÓN ---
 
-    // Mezclar el mazo
-        sortear();
-
-    // Cambiar de pantalla
-    document.getElementById('setup-screen').classList.remove('active-screen');
-    document.getElementById('game-screen').classList.add('active-screen');
-    
-    loadNextItem();
-}
- function sortear() {
-         studyQueue.sort(() => Math.random() - 0.5);
-        currentItemIndex = 0;
- }
-
-function loadNextItem() {
-
-    const item = studyQueue[currentItemIndex];
-    document.getElementById('current-kanji').innerText = item.kanji;
-    document.getElementById('current-kana').innerText = item.kana;
-    document.getElementById('current-significado').innerText = item.significado;
-    document.getElementById('game-progress').innerText = `Kanjis restantes: ${studyQueue.length - currentItemIndex}`;
-    document.getElementById('game-laps').innerText = `Vueltas hechas: ${currentLaps}`;
-    document.getElementById('answer-input').value = "";
-    document.getElementById('answer-input').focus();
-    document.getElementById('feedback').innerText = "";
-}
-
-// Escuchar la tecla Enter en el input
-document.getElementById('answer-input').addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        const val = this.value.toLowerCase().trim();
-        const correct = studyQueue[currentItemIndex].romaji;
-
-        if (val === correct) {
-            currentItemIndex++;
-            if (currentItemIndex >= studyQueue.length) {
-                currentLaps++;
-                sortear();
+        function toggleGroup(title, element) {
+            if (selectedGroups.has(title)) {
+                selectedGroups.delete(title);
+                element.classList.remove('selected');
+            } else {
+                selectedGroups.add(title);
+                element.classList.add('selected');
             }
-            loadNextItem();
-        } else {
-            document.getElementById('feedback').innerText = "Incorrecto, intenta de nuevo";
-            document.getElementById('feedback').style.color = "var(--error)";
+            updateCount();
         }
-    }
-});
 
+        function selectAll(bool) {
+            const groupsInTab = kanjiDatabase[currentTab];
+            groupsInTab.forEach(g => {
+                if (bool) selectedGroups.add(g.title);
+                else selectedGroups.delete(g.title);
+            });
+            renderGroups();
+            updateCount();
+        }
+
+        function updateCount() {
+            document.getElementById('count').innerText = selectedGroups.size;
+        }
+        //========================================================================
+        // --- Load Del Estudio ---
+        function startStudySession() {
+            if (selectedGroups.size === 0) {
+                alert("¡Selecciona al menos un grupo!");
+                return;
+            }
+
+            studyQueue = [];
+            Object.values(kanjiDatabase).flat().forEach(group => {
+                if (selectedGroups.has(group.title)) {
+                    studyQueue.push(...group.items);
+                }
+            });
+                sortear();
+
+
+            document.getElementById('setup-screen').classList.remove('active-screen');
+            document.getElementById('game-screen').classList.add('active-screen');
+            
+            loadNextItem();
+        }
+        function sortear() {
+                studyQueue.sort(() => Math.random() - 0.5);
+                currentItemIndex = 0;
+        }
+        //========================================================================
+        // --- Función para cargar el siguiente ítem de estudio ---
+
+        function loadNextItem() {
+
+            const item = studyQueue[currentItemIndex];
+            document.getElementById('current-kanji').innerText = item.kanji;
+            document.getElementById('current-kana').innerText = item.kana;
+            document.getElementById('current-significado').innerText = item.significado;
+            document.getElementById('game-progress').innerText = `Kanjis restantes: ${studyQueue.length - currentItemIndex}`;
+            document.getElementById('game-laps').innerText = `Vueltas hechas: ${currentLaps}`;
+            document.getElementById('answer-input').value = "";
+            document.getElementById('answer-input').focus();
+            document.getElementById('feedback').innerText = "";
+        }
+        //========================================================================
+        // --- Validación de respuestas ---
+
+        document.getElementById('answer-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                const val = this.value.toLowerCase().trim();
+                const correct = studyQueue[currentItemIndex].romaji;
+
+                if (val === correct) {
+                    currentItemIndex++;
+                    if (currentItemIndex >= studyQueue.length) {
+                        currentLaps++;
+                        sortear();
+                    }
+                    loadNextItem();
+                } else {
+                    document.getElementById('feedback').innerText = "Incorrecto, intenta de nuevo";
+                    document.getElementById('feedback').style.color = "var(--error)";
+                }
+            }
+        });
+
+        //========================================================================
+        //                                                                       |
+        //                                                                       |
+        //========================================================================
 
 
         // ===============================\\

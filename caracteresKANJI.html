@@ -400,69 +400,80 @@ const kanjiDatabase = {
     ]
 };
 
+
+
+//========================================================================================//
 // --- LOGICA DE RENDERIZADO VISUAL ---
 
-let currentTab = "Numeros"; // Categoría inicial
+        let currentTab = "Numeros"; // Categoría inicial
 
-function initVisualizer() {
-    renderTabs();
-    renderGrid();
-}
-
-function renderTabs() {
-    const container = document.getElementById('category-tabs');
-    if (!container) return;
-    
-    container.innerHTML = "";
-    Object.keys(kanjiDatabase).forEach(cat => {
-        const btn = document.createElement('button');
-        // Clase active si coincide
-        btn.className = cat === currentTab ? 'active' : '';
-        btn.innerText = cat;
-        btn.onclick = () => {
-            currentTab = cat;
-            renderTabs(); // Re-render para actualizar el botón activo
+        function initVisualizer() {
+            renderTabs();
             renderGrid();
-        };
-        container.appendChild(btn);
-    });
-}
+        }
 
-function renderGrid() {
-    const displayArea = document.getElementById('kanji-display-area');
-    if (!displayArea) return;
-    
-    displayArea.innerHTML = ""; // Limpiar antes de dibujar
-    const groups = kanjiDatabase[currentTab];
+        function renderTabs() {
+            const container = document.getElementById('category-tabs');
+            if (!container) return;
+            
+            container.innerHTML = "";
+            Object.keys(kanjiDatabase).forEach(cat => {
+                const btn = document.createElement('button');
+                // Clase active si coincide
+                btn.className = cat === currentTab ? 'active' : '';
+                btn.innerText = cat;
+                btn.onclick = () => {
+                    currentTab = cat;
+                    renderTabs(); // Re-render para actualizar el botón activo
+                    renderGrid();
+                };
+                container.appendChild(btn);
+            });
+        }
+    //========================================================================================//
+    // Renderizar el grid de kanjis según la categoría seleccionada
+        function renderGrid() {
+            const displayArea = document.getElementById('kanji-display-area');
+            if (!displayArea) return;
+            
+            displayArea.innerHTML = ""; // Limpiar antes de dibujar
+            const groups = kanjiDatabase[currentTab];
 
-    groups.forEach(group => {
-        // Título del grupo
-        const title = document.createElement("h2");
-        title.innerText = group.title;
-        displayArea.appendChild(title);
+            groups.forEach(group => {
+                // Título del grupo
+                const title = document.createElement("h2");
+                title.innerText = group.title;
+                displayArea.appendChild(title);
 
-        // Contenedor grid-wrapper
-        const wrapper = document.createElement("div");
-        wrapper.className = "grid-wrapper";
+                // Contenedor grid-wrapper
+                const wrapper = document.createElement("div");
+                wrapper.className = "grid-wrapper";
 
-        const row = document.createElement("div");
-        row.className = "group-row";
+                const row = document.createElement("div");
+                row.className = "group-row";
 
-        group.items.forEach(item => {
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-                <span class="char">${item.kanji}</span>
-                <span class="kana-text">${item.kana}</span>
-                <span class="meaning-text">${item.significado}</span>
-            `;
-            row.appendChild(card);
-        });
+                group.items.forEach(item => {
+                    const card = document.createElement("div");
+                    card.className = "card";
+                    card.innerHTML = `
+                        <span class="char">${item.kanji}</span>
+                        <span class="kana-text">${item.kana}</span>
+                        <span class="meaning-text">${item.significado}</span>
+                    `;
+                    row.appendChild(card);
+                });
 
-        wrapper.appendChild(row);
-        displayArea.appendChild(wrapper);
-    });
-}
+                wrapper.appendChild(row);
+                displayArea.appendChild(wrapper);
+            });
+        }
+
+        //========================================================================
+        //                                                                       |
+        //                                                                       |
+        //========================================================================
+
+
         // ===============================\\
                 //SIDEBARS
         // ===============================\\
