@@ -43,7 +43,7 @@ items.forEach(item => {
 
         if (texto.includes('kana')) {
             window.location.href = 'kanastudy.html';
-        } else if (texto.includes('who i am')) {
+        } else if (texto.includes('quien soy?')) {
             window.location.href = 'WhoIam.html';
         }   else if (texto.includes('kanji')) {
             window.location.href = 'kanjiStudy.html';
