@@ -47,11 +47,11 @@
                 const texto = item.innerText.toLowerCase();
 
                 if (texto.includes('kana')) {
-                    window.location.href = 'kanastudy.html';
+                    window.location.href = 'J1_kanastudy.html';
                 } else if (texto.includes('qui')) {
-                    window.location.href = 'WhoIam.html';
+                    window.location.href = 'LA1_whoIam.html';
                 }   else if (texto.includes('kanji')) {
-                    window.location.href = 'kanjiStudy.html';
+                    window.location.href = 'K1_kanjiStudy.html';
                 }
             });
         });
