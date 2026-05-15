@@ -1,0 +1,191 @@
+        /* =========================================
+            1. VARIABLES Y TEMAS GENERALES
+           ========================================= */
+        :root {
+            --color-bg: #0f172a;
+            --color-card-bg: rgba(30, 41, 59, 0.7);
+            --color-char: #ffffff;
+            --color-romaji: #38bdf8;
+            --border-color: #334155;
+        }
+
+        
+        body {
+            font-family: 'Segoe UI', "Yu Gothic", sans-serif;
+            background-color: var(--color-bg);
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0px;
+        }
+        body.light { --color-bg: #f8fafc; --color-card-bg: #ffffff; --color-char: #0f172a; --color-romaji: #2563eb; --border-color: #cbd5e1; background-color: var(--color-bg);}
+        body.thematic { --color-bg: #222; --color-card-bg: rgba(248, 246, 232, 0.95); --color-char: #000; --color-romaji: #555; --border-color: #000; background-image: url('src/backgroundVerCaracteres.jpg');background-size: cover;background-position: center;background-attachment: fixed;}
+        
+        /* =========================
+           HEADER Y NAVEGACIÓN
+          ========================== */
+        header {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #565656;
+            border-bottom: 3px solid #6f6f6f;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        header.light { background-color: #b9b9b9; border-bottom: 3px solid #000; color: #000; }
+        header.thematic { background: rgba(255, 255, 255, 0.3); color: #222; border-bottom: 3px solid #393939; }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            white-space: nowrap;
+        }
+
+        #languageSelect {
+            min-width: 60px;
+            width: auto;
+            margin-left: 20px;
+            size: auto;
+            background: #333;
+            color: white;
+            border: 1px solid #666;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+		body.thematic #languageSelect { background: rgba(255, 255, 255, 0.5); color: #000; }
+
+        .menu-btn { position: absolute; left: 20px; z-index: 1100; }
+        .menu-btn img { width: 45px; height: 45px; border-radius: 50%; border: 2px solid white; transition: 0.3s;}
+        .menu-btn img:hover { transform: scale(1.1); border-color: var(--accent); }
+
+        .settings-btn { 
+            position: absolute; 
+            right: 20px; 
+            cursor: pointer; 
+            font-size: 24px; 
+            z-index: 2100; 
+        }
+
+        /* Menú de Categorías (Botones) */
+        .menu { 
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 6px; 
+            justify-content: center; 
+            padding: 10px 0;
+            position: sticky;
+            top: 60px; /* Debajo del header */
+            z-index: 100;
+            background: transparent;
+            width: 100%;
+        }
+
+        button {
+            padding: 6px 12px;
+            border: none;
+            background: #1e293b;
+            color: white;
+            cursor: pointer;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 12px;
+            border: 1px solid #334155;
+            transition: 0.2s;
+        }
+
+        button.active { 
+            background: #3d5afe; 
+            border-color: #38bdf8;
+        }
+
+        h2 { 
+            color: var(--color-romaji); 
+            font-size: 1rem; 
+            margin: 10px 0; 
+            text-align: center;
+            width: 100%;
+        }
+
+        /* =========================================
+           3. PANEL LATERAL (AJUSTES)
+           ========================================= */
+        .settings-panel {
+            position: fixed; 
+            right: -300px; 
+            top: 0; 
+            width: 250px; 
+            height: 100%;
+            background: #1e293b; 
+            padding: 20px; 
+            padding-top: 70px; /* Espacio para el botón */
+            transition: 0.4s; 
+            z-index: 2000;
+            border-left: 2px solid var(--border-color);
+            color: white;
+        }
+        .settings-panel.open { right: 0; }
+        body.thematic .settings-panel {background-image: url('src/thematicRightSidebar.png');background-size: cover;border-left: 5px solid #111;}
+
+        .settings-panel button {
+            width: 100%; 
+            padding: 10px; 
+            margin-top: 5px; 
+            background: #333; 
+        }
+        body.thematic .settings-panel button {background: rgba(255, 255, 255, 0.3); color: #222; border: 1px solid #393939;}
+
+        .settings-panel select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            background: #333;
+            color: white;
+            border: 1px solid #555;
+        }
+
+        /* =========================================
+           4. CONTENEDOR MULTI-COLUMNA Y TARJETAS
+           ========================================= */
+        .grid-wrapper {
+            display: flex;
+            flex-wrap: wrap; 
+            gap: 15px;
+            justify-content: center;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .group-row {
+            display: grid;
+            grid-template-columns: repeat(5, 60px); 
+            gap: 6px;
+            background-color: var(--color-card-bg);
+            padding: 8px;
+            border-radius: 10px;
+            border-left: 4px solid #38bdf8;
+            height: fit-content;
+        }
+
+        .card {
+            background-color: var(--color-card-bg);
+            padding: 6px 0;
+            border-radius: 6px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            width: 60px;
+            height: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .card.empty { visibility: hidden; }
+        .char { font-size: 24px; color: var(--color-char); line-height: 1; }
+        .romaji { font-size: 10px; color: var(--color-romaji); font-weight: bold; margin-top: 4px; }
+        .hidden { display: none !important; }
