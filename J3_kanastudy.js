@@ -6,15 +6,15 @@ const DATA = {
         'T': {'た':'ta','ち':'chi','つ':'tsu','て':'te','と':'to'},
         'N': {'な':'na','に':'ni','ぬ':'nu','ね':'ne','の':'no'},
         'H': {'は':'ha','ひ':'hi','ふ':'fu','へ':'he','ほ':'ho'},
-        'M': {'ま':'ma','み':'mi','む':'mu','め':'me','mo':'mo'},
+        'M': {'ま':'ma','み':'mi','む':'mu','め':'me','も':'mo'},
         'Y': {'や':'ya','ゆ':'yu','よ':'yo'},
         'R': {'ら':'ra','り':'ri','る':'ru','れ':'re','ろ':'ro'},
         'W/N': {'わ':'wa','を':'wo','ん':'n'},
         'G': {'が':'ga','ぎ':'gi','ぐ':'gu','げ':'ge','ご':'go'},
         'Z': {'ざ':'za','じ':'ji','ず':'zu','ぜ':'ze','ぞ':'zo'},
-        'D': {'だ':'da','ぢ':'ji','づ':'zu',' de':'de','ど':'do'},
+        'D': {'だ':'da','ぢ':'ji','づ':'zu','で':'de','ど':'do'},
         'B': {'ば':'ba','び':'bi','ぶ':'bu','べ':'be','ぼ':'bo'},
-        'P': {'ぱ':'pa','pi':'pi','ぷ':'pu','ぺ':'pe','ぽ':'po'},
+        'P': {'ぱ':'pa','ぴ':'pi','ぷ':'pu','ぺ':'pe','ぽ':'po'},
   
         'C1': {'きゃ':'kya','きゅ':'kyu','きょ':'kyo','しゃ':'sha','しゅ':'shu'},
         'C2': {'しょ':'sho','ちゃ':'cha','ちゅ':'chu','ちょ':'cho','にゃ':'nya'},
@@ -40,7 +40,7 @@ const DATA = {
         'Z': {'ザ':'za','ジ':'ji','ズ':'zu','ゼ':'ze','ゾ':'zo'},
         'D': {'ダ':'da','ヂ':'ji','ヅ':'zu','デ':'de','ド':'do'},
         'B': {'バ':'ba','ビ':'bi','ブ':'bu','ベ':'be','ボ':'bo'},
-        'P': {'パ':'pa','pi':'pi','プ':'pu','ぺ':'pe','ポ':'po'},
+        'P': {'パ':'pa','ピ':'pi','プ':'pu','ペ':'pe','ポ':'po'},
       
         'C1': {'キャ':'kya','キュ':'kyu','キョ':'kyo','シャ':'sha','シュ':'shu'},
         'C2': {'ショ':'sho','チャ':'cha','チュ':'chu','チョ':'cho','ニャ':'nya'},
@@ -63,7 +63,9 @@ const DATA = {
         let keysActuales = []; 
         let indiceBucle = 0;   
         let charActual = "";
-        let racha = 0;
+        let correctas = 0;
+        let laps = 0;
+        let erroneas = 0;
 
         let modoBase = 'h'; 
 //========================================================================
@@ -122,9 +124,10 @@ const DATA = {
 
             // 3. Preparar el juego
             keysActuales = mezclarArray(Object.keys(poolActual));
+            erroneas = 0;
+            laps = 0;
             indiceBucle = 0;
-            racha = 0;
-
+            correctas = 0;
             document.getElementById('menu').classList.add('hidden');
             document.getElementById('juego').classList.remove('hidden');
             actualizarScore();
@@ -159,12 +162,12 @@ const DATA = {
             if (res === "") return;
 
             if (res === poolActual[charActual]) {
-                racha++;
+                correctas++;
                 indiceBucle++; 
                 actualizarScore();
                 nuevaPregunta();
             } else {
-                racha = 0;
+                erroneas++;
                 fb.innerText = `❌ Era: ${poolActual[charActual]}`;
                 fb.style.color = "#ef4444";
                 actualizarScore();
@@ -191,6 +194,7 @@ const DATA = {
         });
 
         function mezclarArray(array) {
+            laps++;
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [array[i], array[j]] = [array[j], array[i]];
@@ -201,7 +205,7 @@ const DATA = {
         function actualizarScore() {
             const scoreEl = document.getElementById('score');
             if (scoreEl) {
-                scoreEl.innerText = `Racha actual🔥: ${racha}`;
+                scoreEl.innerText = `Correctas: ${correctas} |Erroneas: ${erroneas}| Vueltas: ${laps}`;
             }
         }
     //========================================================================
